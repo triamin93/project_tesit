@@ -116,7 +116,7 @@ if ($level != "admin") {
                                             <th>Username</th>
                                             <th>Level</th>
                                             <th>Last Login</th>
-                                            <th>Aksi</th>
+                                            <th>Aksiku</th>
                                         </tr>
                                     </thead>
                                     <tbody>
