@@ -68,7 +68,7 @@ if ($level != "admin") {
 </head>
 
 <body class="sb-nav-fixed">
-    <!-- headernya -->
+    <!-- HEADER -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TESIT</a>
         <!-- tombol menampilkan dan menyembunyikan sidebar  -->
@@ -80,7 +80,7 @@ if ($level != "admin") {
             </div>
         </form>
     </nav>
-    <!-- sidebarnya -->
+    <!-- SIDEBAR -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -115,30 +115,19 @@ if ($level != "admin") {
                                 <a class="nav-link" href="client_admin/index.php">Client Admin</a>
                             </nav>
                         </div> -->
-                        <!-- link Menu FTI -->
-                        <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFTI" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
-                            FTI
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayoutsFTI" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="xxx/index.php">XXX</a>
-                                <a class="nav-link" href="xxx/index.php">XXX</a>
-                                <a class="nav-link" href="xxx/index.php">XXX</a>
-                            </nav>
-                        </div> -->
+                        <!-- Menampilkan nama project dari database di sidebar -->
+
                     </div>
                 </div>
             </nav>
         </div>
-        <!-- kontennya -->
+        <!-- KONTEN -->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
                     <h1 class="mt-4">Dashboard Admin</h1>
                     <div class="row">
-                        <!-- Total data Admin -->
+                        <!-- BOX BIRU -->
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body dashboard">
@@ -150,7 +139,7 @@ if ($level != "admin") {
                                 </div>
                             </div>
                         </div>
-                        <!-- Total Data Barang -->
+                        <!-- BOX KUNING -->
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
                                 <div class="card-body dashboard">
@@ -162,7 +151,7 @@ if ($level != "admin") {
                                 </div>
                             </div>
                         </div>
-                        <!-- Total Data Barang Masuk -->
+                        <!-- BOX HIJAU -->
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body dashboard">
@@ -174,7 +163,7 @@ if ($level != "admin") {
                                 </div>
                             </div>
                         </div>
-                        <!-- Total Data Barang Keluar -->
+                        <!-- BOX MERAH -->
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body dashboard">
@@ -187,7 +176,7 @@ if ($level != "admin") {
                             </div>
                         </div>
                     </div>
-                    <!-- Table Untuk Stok Barang Sedikit atau Habis -->
+                    <!-- Table menampilkan testcase -->
                     <div class="card mb-4">
                         <div class="card-header bg-info">
                             <i class="fas fa-table mr-1"></i>
@@ -204,21 +193,21 @@ if ($level != "admin") {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <?php
+                                        <?php
                                         // Query mengambil data barang dengan stok kurang dari 5
-                                        $barang = mysqli_query($conn, "SELECT * FROM barang WHERE stok < 5 ORDER BY nama_barang ASC");
+                                        $projek = mysqli_query($conn, "SELECT * FROM project ORDER BY id_project ASC");
                                         $i = 1;
                                         // pengulangan menampilkan data
-                                        while ($data = mysqli_fetch_array($barang)) :
+                                        while ($data = mysqli_fetch_array($projek)) :
                                         ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $data['nama_barang']; ?></td>
-                                                <td><?= $data['stok']; ?></td>
+                                                <td><?= $data['nama_project']; ?></td>
+                                                <td><?= $data['menu']; ?></td>
                                             </tr>
                                         <?php
                                         endwhile;
-                                        ?> -->
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
