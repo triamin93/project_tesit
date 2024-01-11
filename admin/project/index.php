@@ -84,6 +84,11 @@ if ($level != "admin") {
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Projek
                         </a>
+                        <!-- link akses -->
+                        <a class="nav-link" href="../akses/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Akses
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -129,11 +134,11 @@ if ($level != "admin") {
                                                 <td>
                                                     <!-- Tombol untuk edit data admin -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_project']; ?>">
-                                                        <i class="fas fa-edit mr-1"></i>Edit
+                                                        <i class="fas fa-edit mr-1"></i>Ubah
                                                     </button>
                                                     <!-- tombol untuk hapus data admin -->
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_project']; ?>">
-                                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>
@@ -143,33 +148,26 @@ if ($level != "admin") {
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Edit Admin</h4>
+                                                            <h4 class="modal-title">Edit projek</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Modal body -->
                                                         <!-- Form untuk edit -->
                                                         <form method="POST">
                                                             <div class="modal-body">
-                                                                <input type="hidden" name="id_admin" value="<?php echo $data['id_admin']; ?>">
+                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
 
                                                                 <div class="form-group">
-                                                                    <label for="nama_lengkap">Nama Lengkap</label>
-                                                                    <input type="text" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" class="form-control" id="nama_lengkap" value="<?= $data['nama_lengkap']; ?>" required>
+                                                                    <label for="nama_projek">Nama Projek</label>
+                                                                    <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek" class="form-control" id="nama_projek" value="<?= $data['nama_project']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="username">Username</label>
-                                                                    <input type="text" name="username" placeholder="Masukkan username" class="form-control" id="username" value="<?= $data['username']; ?>" required>
+                                                                    <label for="nama_cr">Nama CR & No Dev</label>
+                                                                    <input type="text" name="nama_cr" placeholder="Masukkan Nama Projek" class="form-control" id="nama_cr" value="<?= $data['nama_cr']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="password">Password</label>
-                                                                    <input type="password" name="password" placeholder="Masukkan password" class="form-control" id="password" required>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="level">Sebagai</label>
-                                                                    <select class="form-control" name="level" id="level">
-                                                                        <option value="admin">Admin</option>
-                                                                        <option value="operator" selected>Operator</option>
-                                                                    </select>
+                                                                    <label for="menu">Menu</label>
+                                                                    <input type="text" name="menu" placeholder="Masukkan Nama Projek" class="form-control" id="menu" value="<?= $data['menu']; ?>" required>
                                                                 </div>
                                                                 <br>
                                                                 <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
@@ -184,15 +182,15 @@ if ($level != "admin") {
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Hapus Admin</h4>
+                                                            <h4 class="modal-title">Hapus Projek</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Modal body -->
                                                         <!-- Form untuk hapus -->
                                                         <form method="POST">
                                                             <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus <?= $data['nama_lengkap']; ?> ?</p>
-                                                                <input type="hidden" name="id_admin" value="<?php echo $data['id_admin']; ?>">
+                                                                <p>Apakah Anda Yakin Menghapus Projek "<?= $data['nama_project']; ?>" dengan nama CR & No Dev "<?= $data['nama_cr']; ?>" di Menu "<?= $data['menu']; ?>" ?</p>
+                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
                                                                 <br>
                                                                 <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
                                                             </div>
@@ -219,7 +217,7 @@ if ($level != "admin") {
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Project</h4>
+                    <h4 class="modal-title">Tambah Projek</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -227,16 +225,16 @@ if ($level != "admin") {
                 <form method="POST">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="nama_lengkap">Nama Project</label>
-                            <input type="text" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" class="form-control" id="nama_lengkap" required>
+                            <label for="nama_projek">Nama Projek</label>
+                            <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek Baru" class="form-control" id="nama_projek" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_lengkap">Nama CR</label>
-                            <input type="text" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" class="form-control" id="nama_lengkap" required>
+                            <label for="nama_cr">Nama CR & No Dev</label>
+                            <input type="text" name="nama_cr" placeholder="Masukkan Nama CR & No Dev" class="form-control" id="nama_cr" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_lengkap">Menu</label>
-                            <input type="text" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" class="form-control" id="nama_lengkap" required>
+                            <label for="menu">Menu</label>
+                            <input type="text" name="menu" placeholder="Masukkan Menu Projek" class="form-control" id="menu" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-lg btn-block" name="tambah">Tambah</button>

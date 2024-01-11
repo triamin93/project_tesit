@@ -16,7 +16,7 @@ if (!isset($_SESSION["username"])) {
 
 $level = $_SESSION["level"];
 
-// jika level bukan pemilik toko (Super Admin)
+// jika level bukan Admin
 if ($level != "admin") {
     echo "
         <script>
@@ -75,7 +75,7 @@ if ($level != "admin") {
                             Dashboard
                         </a>
                         <!-- link admin -->
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../admin/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
@@ -85,7 +85,7 @@ if ($level != "admin") {
                             Projek
                         </a>
                         <!-- link akses -->
-                        <a class="nav-link" href="../akses/index.php">
+                        <a class="nav-link" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Akses
                         </a>
@@ -97,7 +97,7 @@ if ($level != "admin") {
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Data User</h1>
+                    <h1 class="mt-4">Data Akses</h1>
                     <div class="card mb-4">
                         <div class="card-header">
                             <!-- Tombol Tambah Admin -->
@@ -112,10 +112,10 @@ if ($level != "admin") {
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Username</th>
-                                            <th>Level</th>
-                                            <th>Last Login</th>
+                                            <th>Project</th>
+                                            <th>Nama CR & No Dev</th>
+                                            <th>Menu</th>
+                                            <th>User</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>

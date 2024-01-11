@@ -18,26 +18,13 @@ function dateIndonesian($date)
 
 // Coding untuk tambah data admin
 if (isset($_POST['tambah'])) {
-    $nama_lengkap = $_POST['nama_lengkap'];
-    $username = $_POST['username'];
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $level = $_POST['level'];
+    $nama_projek = $_POST['nama_projek'];
+    $nama_cr = $_POST['nama_cr'];
+    $menu = $_POST['menu'];
 
-    // cek username sudah ada atau belum
-    $result = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
-    if (mysqli_fetch_assoc($result)) {
-        echo "<script>
-                alert('Username Sudah Terdaftar');
-            </script>";
-        return false;
-    }
-
-    // enkripsi password
-    $password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Query Tambah admin
-    $tambah_admin = mysqli_query($conn, "INSERT INTO user (nama_lengkap, username, level, password, last_login) values('$nama_lengkap', '$username', '$level', '$password', '')");
-    if ($tambah_admin) {
+    // Query Tambah projek
+    $tambah_projek = mysqli_query($conn, "INSERT INTO project (nama_project, nama_cr, menu) values('$nama_projek', '$nama_cr', '$menu')");
+    if ($tambah_projek) {
         echo "
         <script>
             alert('Data Berhasil Ditambahkan!');
@@ -56,11 +43,11 @@ if (isset($_POST['tambah'])) {
 
 // Coding untuk hapus data admin
 if (isset($_POST['hapus'])) {
-    $id_admin = $_POST['id_admin'];
+    $id_project = $_POST['id_project'];
 
     // query untuk hapus data Admin
-    $hapus_admin = mysqli_query($conn, "DELETE FROM admin WHERE id_admin = '$id_admin'");
-    if ($hapus_admin) {
+    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
+    if ($hapus_project) {
         echo "
         <script>
             alert('Data Berhasil Dihapus!');
@@ -79,18 +66,14 @@ if (isset($_POST['hapus'])) {
 
 // Coding untuk edit data admin
 if (isset($_POST['edit'])) {
-    $id_admin = $_POST['id_admin'];
-    $nama_lengkap = $_POST['nama_lengkap'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $level = $_POST['level'];
-
-    // enkripsi password
-    $password = password_hash($password, PASSWORD_DEFAULT);
+    $id_project = $_POST['id_project'];
+    $nama_projek = $_POST['nama_projek'];
+    $nama_cr = $_POST['nama_cr'];
+    $menu = $_POST['menu'];
 
     // Query untuk edit data
-    $edit_admin = mysqli_query($conn, "UPDATE admin set nama_lengkap = '$nama_lengkap', username = '$username', password = '$password', level = '$level' WHERE id_admin = '$id_admin'");
-    if ($edit_admin) {
+    $edit_projek = mysqli_query($conn, "UPDATE project set nama_project = '$nama_projek', nama_cr = '$nama_cr', menu = '$menu' WHERE id_project = '$id_project'");
+    if ($edit_projek) {
         echo "
         <script>
             alert('Data Berhasil Diedit!');

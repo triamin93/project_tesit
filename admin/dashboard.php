@@ -97,10 +97,15 @@ if ($level != "admin") {
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
-                        <!-- link Dashboard -->
+                        <!-- link Projek -->
                         <a class="nav-link" href="project/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Project
+                            Projek
+                        </a>
+                        <!-- link akses -->
+                        <a class="nav-link" href="akses/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Akses
                         </a>
                         <!-- link Menu FCC -->
                         <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
