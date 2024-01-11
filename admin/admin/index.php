@@ -1,32 +1,31 @@
 <?php
-session_start();
-// memanggil fungsi 
-require 'functions.php';
+    session_start();
+    // memanggil fungsi 
+    require 'functions.php';
 
-// jika tidak ada username yang masuk
-if (!isset($_SESSION["username"])) {
-    echo "
-        <script>
-            alert('Anda Harus Melakukan Login!');
-            document.location.href = '../../index.php';
-        </script>
-        ";
-    exit;
-}
+    // jika tidak ada username yang masuk
+    if (!isset($_SESSION["username"])) {
+        echo "
+            <script>
+                alert('Anda Harus Melakukan Login!');
+                document.location.href = '../../index.php';
+            </script>
+            ";
+        exit;
+    }
 
-$level = $_SESSION["level"];
+    $level = $_SESSION["level"];
 
-// jika level bukan admin
-if ($level != "admin") {
-    echo "
-        <script>
-            alert('Anda tidak memiliki akses pada halaman Admin');
-            document.location.href = '../logout.php';
-        </script>
-        ";
-    exit;
-}
-
+    // jika level bukan admin
+    if ($level != "admin") {
+        echo "
+            <script>
+                alert('Anda tidak memiliki akses pada halaman Admin');
+                document.location.href = '../logout.php';
+            </script>
+            ";
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +52,7 @@ if ($level != "admin") {
     <!-- HEADER -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TESIT</a>
-        <!-- tombol menampilkan dan menghilangkan sidebar -->
+        <!-- tombol mengatur sidebar -->
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
