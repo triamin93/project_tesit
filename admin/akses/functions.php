@@ -54,7 +54,7 @@ if (isset($_POST['tambah'])) {
     }
 }
 
-// Coding untuk hapus data admin
+// Coding untuk hapus data akses
 if (isset($_POST['hapus'])) {
     $id_user = $_POST['id_user'];
 

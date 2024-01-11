@@ -16,7 +16,7 @@ function dateIndonesian($date)
     return $formatTanggal;
 }
 
-// Coding untuk tambah data admin
+// Coding untuk tambah data adminn
 if (isset($_POST['tambah'])) {
     $nama_projek = $_POST['nama_projek'];
     $nama_cr = $_POST['nama_cr'];

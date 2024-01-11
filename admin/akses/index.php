@@ -121,7 +121,7 @@ if ($level != "admin") {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // mengambil query data admin
+                                        // mengambil query data akses
                                         $user = mysqli_query($conn, "SELECT * FROM user");
                                         $i = 1;
                                         // Pengulangan data admin

@@ -1,32 +1,31 @@
 <?php
-session_start();
-// memanggil fungsi 
-require 'functions.php';
+    session_start();
+    // memanggil fungsi 
+    require 'functions.php';
 
-// jika tidak ada username yang masuk
-if (!isset($_SESSION["username"])) {
-    echo "
-        <script>
-            alert('Anda Harus Login Dulu!');
-            document.location.href = '../../index.php';
-        </script>
-        ";
-    exit;
-}
+    // jika tidak ada username yang masuk
+    if (!isset($_SESSION["username"])) {
+        echo "
+            <script>
+                alert('Anda Harus Login Dulu!');
+                document.location.href = '../../index.php';
+            </script>
+            ";
+        exit;
+    }
 
-$level = $_SESSION["level"];
+    $level = $_SESSION["level"];
 
-// jika level bukan Admin
-if ($level != "admin") {
-    echo "
-        <script>
-            alert('Anda tidak punya akses pada halaman Admin');
-            document.location.href = '../logout.php';
-        </script>
-        ";
-    exit;
-}
-
+    // jika level bukan Admin
+    if ($level != "admin") {
+        echo "
+            <script>
+                alert('Anda tidak punya akses pada halaman Admin');
+                document.location.href = '../logout.php';
+            </script>
+            ";
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +49,10 @@ if ($level != "admin") {
 </head>
 
 <body class="sb-nav-fixed">
-    <!-- headernya -->
+    <!-- HEADER -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TESIT</a>
-        <!-- tombol menampilkan dan menghilangkan sidebar -->
+        <!-- tombol mengatur sidebar -->
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
@@ -62,7 +61,7 @@ if ($level != "admin") {
             </div>
         </form>
     </nav>
-    <!-- sidebarnya -->
+    <!-- SIDEBAR -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -84,16 +83,11 @@ if ($level != "admin") {
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Projek
                         </a>
-                        <!-- link akses -->
-                        <a class="nav-link" href="../akses/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Akses
-                        </a>
                     </div>
                 </div>
             </nav>
         </div>
-        <!-- kontennya -->
+        <!-- KONTEN -->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
@@ -142,13 +136,14 @@ if ($level != "admin") {
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <!-- modal edit -->
+
+                                            <!-- Modal edit -->
                                             <div class="modal fade" id="edit<?php echo $data['id_project']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Edit projek</h4>
+                                                            <h4 class="modal-title">Edit Projek</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Modal body -->
@@ -172,7 +167,7 @@ if ($level != "admin") {
                                                                 <br>
                                                                 <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
                                                             </div>
-                                                        </form>
+                                                        </form> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -217,7 +212,7 @@ if ($level != "admin") {
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Projek</h4>
+                    <h4 class="modal-title">Tambah Projekk</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->

@@ -7,7 +7,7 @@ require 'functions.php';
 if (!isset($_SESSION["username"])) {
     echo "
         <script>
-            alert('Anda Harus Login Dulu!');
+            alert('Anda Harus Login Dulu dong!');
             document.location.href = '../../index.php';
         </script>
         ";
@@ -158,7 +158,6 @@ if ($level != "admin") {
                                                         <form method="POST">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id_user" value="<?php echo $data['id_user']; ?>">
-
                                                                 <div class="form-group">
                                                                     <label for="nama_lengkap">Nama Lengkap</label>
                                                                     <input type="text" name="nama_lengkap" placeholder="Masukkan Nama Lengkap" class="form-control" id="nama_lengkap" value="<?= $data['nama_lengkap']; ?>" required>

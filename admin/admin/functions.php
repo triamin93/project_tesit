@@ -100,7 +100,7 @@ if (isset($_POST['edit'])) {
     } else {
         echo "
         <script>
-            alert('Data Gagal Diedit!');
+            alert('Data Gagal Diedit!!');
             document.location.href = 'index.php';
         </script>
         ";
