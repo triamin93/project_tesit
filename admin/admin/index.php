@@ -7,7 +7,7 @@ require 'functions.php';
 if (!isset($_SESSION["username"])) {
     echo "
         <script>
-            alert('Anda Harus Login Dulu!');
+            alert('Anda Harus Melakukan Login!');
             document.location.href = '../../index.php';
         </script>
         ";
@@ -16,11 +16,11 @@ if (!isset($_SESSION["username"])) {
 
 $level = $_SESSION["level"];
 
-// jika level bukan pemilik toko (Super Admin)
+// jika level bukan admin
 if ($level != "admin") {
     echo "
         <script>
-            alert('Anda tidak punya akses pada halaman Pemilik Toko (Super Admin)');
+            alert('Anda tidak memiliki akses pada halaman Admin');
             document.location.href = '../logout.php';
         </script>
         ";
@@ -50,7 +50,7 @@ if ($level != "admin") {
 </head>
 
 <body class="sb-nav-fixed">
-    <!-- headernya -->
+    <!-- HEADER -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TESIT</a>
         <!-- tombol menampilkan dan menghilangkan sidebar -->
@@ -62,7 +62,7 @@ if ($level != "admin") {
             </div>
         </form>
     </nav>
-    <!-- sidebarnya -->
+    <!-- SIDEBAR -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -97,24 +97,14 @@ if ($level != "admin") {
                                 <a class="nav-link" href="../client_admin/index.php">Client Admin</a>
                             </nav>
                         </div> -->
-                        <!-- link Menu FTI -->
-                        <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFTI" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
-                            FTI
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayoutsFTI" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="../xxx/index.php">XXX</a>
-                                <a class="nav-link" href="../xxx/index.php">XXX</a>
-                                <a class="nav-link" href="../xxx/index.php">XXX</a>
-                            </nav>
-                        </div> -->
+
+                        <!-- Menampilkan nama project dari database di sidebar -->
+
                     </div>
                 </div>
             </nav>
         </div>
-        <!-- kontennya -->
+        <!-- KONTEN -->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
@@ -136,7 +126,7 @@ if ($level != "admin") {
                                             <th>Nama Lengkap</th>
                                             <th>Username</th>
                                             <th>Level</th>
-                                            <th>Last Login</th>
+                                            <th>Terakhir Login</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -159,13 +149,14 @@ if ($level != "admin") {
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_user']; ?>">
                                                         <i class="fas fa-edit mr-1"></i>Edit
                                                     </button>
-                                                    <!-- tombol untuk hapus data admin -->
+                                                    <!-- Tombol untuk hapus data admin -->
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_user']; ?>">
-                                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <!-- modal edit -->
+
+                                            <!-- Modal edit -->
                                             <div class="modal fade" id="edit<?php echo $data['id_user']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -193,7 +184,7 @@ if ($level != "admin") {
                                                                     <input type="password" name="password" placeholder="Masukkan password" class="form-control" id="password" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="level">Sebagai</label>
+                                                                    <label for="level">Level</label>
                                                                     <select class="form-control" name="level" id="level">
                                                                         <option value="admin">Admin</option>
                                                                         <option value="operator" selected>Operator</option>
@@ -206,7 +197,8 @@ if ($level != "admin") {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- modal hapus -->
+
+                                            <!-- Modal hapus -->
                                             <div class="modal fade" id="delete<?php echo $data['id_user']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -219,7 +211,7 @@ if ($level != "admin") {
                                                         <!-- Form untuk hapus -->
                                                         <form method="POST">
                                                             <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus <?= $data['nama_lengkap']; ?> ?</p>
+                                                                <p>Apakah anda yakin akan menghapus <?= $data['nama_lengkap']; ?> ?</p>
                                                                 <input type="hidden" name="id_user" value="<?php echo $data['id_user']; ?>">
                                                                 <br>
                                                                 <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
@@ -240,6 +232,7 @@ if ($level != "admin") {
             </main>
         </div>
     </div>
+
     <!-- All modal -->
     <!-- Modal tambah -->
     <div class="modal fade" id="tambah">
@@ -267,7 +260,7 @@ if ($level != "admin") {
                             <input type="password" name="password" placeholder="Masukkan password" class="form-control" id="password" required>
                         </div>
                         <div class="form-group">
-                            <label for="level">Sebagai</label>
+                            <label for="level">Level</label>
                             <select class="form-control" name="level" id="level">
                                 <option value="admin">Admin</option>
                                 <option value="operator" selected>Operator</option>
