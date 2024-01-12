@@ -106,9 +106,12 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Projek</th>
                                             <th>Nama CR</th>
-                                            <th>Menu</th>
+                                            <th>Nomor CR</th>
+                                            <th>PIC</th>
+                                            <th>Tanggal Diterima</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -122,9 +125,12 @@
                                         ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $data['nama_project']; ?></td>
                                                 <td><?= $data['nama_cr']; ?></td>
-                                                <td><?= $data['menu']; ?></td>
+                                                <td><?= $data['no_cr']; ?></td>
+                                                <td><?= $data['customer_pic']; ?></td>
+                                                <td><?= $data['tanggal_diterima']; ?></td>
+                                                <td><?= $data['tanggal_mulai']; ?></td>
+                                                <td><?= $data['tanggal_selesai']; ?></td>
                                                 <td>
                                                     <!-- Tombol untuk edit data admin -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_project']; ?>">
@@ -212,7 +218,7 @@
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Tambah Projekk</h4>
+                    <h4 class="modal-title">Tambah Projek</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
@@ -224,12 +230,24 @@
                             <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek Baru" class="form-control" id="nama_projek" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_cr">Nama CR & No Dev</label>
+                            <label for="nama_cr">Nama CR</label>
                             <input type="text" name="nama_cr" placeholder="Masukkan Nama CR & No Dev" class="form-control" id="nama_cr" required>
                         </div>
                         <div class="form-group">
-                            <label for="menu">Menu</label>
-                            <input type="text" name="menu" placeholder="Masukkan Menu Projek" class="form-control" id="menu" required>
+                            <label for="nama_cr">No CR</label>
+                            <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_diterima">Tanggal Diterima</label>
+                            <input type="date" name="tanggal_diterima" class="form-control" id="tanggal_diterima" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_diterima">Tanggal Mulai</label>
+                            <input type="date" name="tanggal_mulai" class="form-control" id="tanggal_mulai">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_diterima">Tanggal Selesai</label>
+                            <input type="date" name="tanggal_selesai" class="form-control" id="tanggal_selesai">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-lg btn-block" name="tambah">Tambah</button>
