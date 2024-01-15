@@ -46,6 +46,9 @@
     <link href="../assets/styles.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 
 <body class="sb-nav-fixed">
@@ -106,12 +109,14 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Nama Projek</th>
                                             <th>Nama CR</th>
                                             <th>Nomor CR</th>
                                             <th>PIC</th>
                                             <th>Tanggal Diterima</th>
                                             <th>Tanggal Mulai</th>
                                             <th>Tanggal Selesai</th>
+                                            <th>User</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -125,12 +130,14 @@
                                         ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
+                                                <td><?= $data['nama_project']; ?></td>
                                                 <td><?= $data['nama_cr']; ?></td>
                                                 <td><?= $data['no_cr']; ?></td>
                                                 <td><?= $data['customer_pic']; ?></td>
                                                 <td><?= $data['tanggal_diterima']; ?></td>
                                                 <td><?= $data['tanggal_mulai']; ?></td>
                                                 <td><?= $data['tanggal_selesai']; ?></td>
+                                                <td></td>
                                                 <td>
                                                     <!-- Tombol untuk edit data admin -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_project']; ?>">
@@ -163,12 +170,39 @@
                                                                     <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek" class="form-control" id="nama_projek" value="<?= $data['nama_project']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="nama_cr">Nama CR & No Dev</label>
-                                                                    <input type="text" name="nama_cr" placeholder="Masukkan Nama Projek" class="form-control" id="nama_cr" value="<?= $data['nama_cr']; ?>" required>
+                                                                    <label for="nama_cr">Nama CR</label>
+                                                                    <input type="text" name="nama_cr" placeholder="Masukkan Nanam CR" class="form-control" id="nama_cr" value="<?= $data['nama_cr']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="menu">Menu</label>
-                                                                    <input type="text" name="menu" placeholder="Masukkan Nama Projek" class="form-control" id="menu" value="<?= $data['menu']; ?>" required>
+                                                                    <label for="no_cr">Nama CR</label>
+                                                                    <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" value="<?= $data['no_cr']; ?>" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="tanggal_diterima">Tanggal Diterima</label>
+                                                                    <input type="date" name="tanggal_diterima" class="form-control" id="tanggal_diterima" value="<?= $data['tanggal_diterima']; ?>" required>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="tanggal_mulai">Tanggal mulai</label>
+                                                                    <input type="date" name="tanggal_mulai" class="form-control" id="tanggal_mulai" value="<?= $data['tanggal_mulai']; ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="tanggal_selesai">Tanggal selesai</label>
+                                                                    <input type="date" name="tanggal_selesai" class="form-control" id="tanggal_selesai" value="<?= $data['tanggal_selesai']; ?>" >
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="useredit">Nama User</label>
+                                                                    <br>
+                                                                    <select class="form-control multiple-select" id="useredit" name="useredit[]" multiple="multiple" >
+                                                                        <?php
+                                                                        // Query untuk menampilkan nama barang
+                                                                        $user = mysqli_query($conn, "SELECT * FROM user");
+                                                                        while ($data = mysqli_fetch_array($user)) {
+                                                                        ?>
+                                                                            <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                                                        <?php
+                                                                        }
+                                                                        ?>
+                                                                    </select> 
                                                                 </div>
                                                                 <br>
                                                                 <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
@@ -234,7 +268,7 @@
                             <input type="text" name="nama_cr" placeholder="Masukkan Nama CR & No Dev" class="form-control" id="nama_cr" required>
                         </div>
                         <div class="form-group">
-                            <label for="nama_cr">No CR</label>
+                            <label for="no_cr">No CR</label>
                             <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" required>
                         </div>
                         <div class="form-group">
@@ -242,12 +276,27 @@
                             <input type="date" name="tanggal_diterima" class="form-control" id="tanggal_diterima" required>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_diterima">Tanggal Mulai</label>
+                            <label for="tanggal_mulai">Tanggal Mulai</label>
                             <input type="date" name="tanggal_mulai" class="form-control" id="tanggal_mulai">
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_diterima">Tanggal Selesai</label>
+                            <label for="tanggal_selesai">Tanggal Selesai</label>
                             <input type="date" name="tanggal_selesai" class="form-control" id="tanggal_selesai">
+                        </div>
+                        <div class="form-group">
+                            <label for="user">Nama User</label>
+                            <br>
+                            <select class="form-control multiple-select" id="user" name="user[]" multiple="multiple" data-placeholder="Select a State">
+                                <?php
+                                // Query untuk menampilkan nama barang
+                                $user = mysqli_query($conn, "SELECT * FROM user");
+                                while ($data = mysqli_fetch_array($user)) {
+                                ?>
+                                    <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select> 
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-lg btn-block" name="tambah">Tambah</button>
@@ -263,6 +312,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script>
+        $(".multiple-select").select2({
+            // maximumSelectionLength: 2
+            // placeholder: 'This is my placeholder',
+            allowClear: true,
+            closeOnSelect: false, 
+            theme: "bootstrap"
+        });
+    </script>
     <script>
         // Call the dataTables jQuery plugin
         $(document).ready(function() {

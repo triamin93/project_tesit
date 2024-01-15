@@ -85,10 +85,10 @@ if ($level != "admin") {
                             Projek
                         </a>
                         <!-- link akses -->
-                        <a class="nav-link" href="../akses/index.php">
+                        <!-- <a class="nav-link" href="../akses/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Akses
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </nav>

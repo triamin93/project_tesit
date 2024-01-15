@@ -103,10 +103,10 @@ if ($level != "admin") {
                             Projek
                         </a>
                         <!-- link aksess -->
-                        <a class="nav-link" href="akses/index.php">
+                        <!-- <a class="nav-link" href="akses/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Akses
-                        </a>
+                        </a> -->
                         <!-- link Menu FCC -->
                         <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>

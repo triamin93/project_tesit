@@ -20,7 +20,10 @@ function dateIndonesian($date)
 if (isset($_POST['tambah'])) {
     $nama_projek = $_POST['nama_projek'];
     $nama_cr = $_POST['nama_cr'];
-    $menu = $_POST['menu'];
+    $no_cr = $_POST['tanggal_diterima'];
+    $no_cr = $_POST['no_cr'];
+    $no_cr = $_POST['no_cr'];
+    $no_cr = $_POST['no_cr'];
 
     // Query Tambah projek
     $tambah_projek = mysqli_query($conn, "INSERT INTO project (nama_project, nama_cr, menu) values('$nama_projek', '$nama_cr', '$menu')");
@@ -42,50 +45,50 @@ if (isset($_POST['tambah'])) {
 }
 
 // Coding untuk hapus data admin
-if (isset($_POST['hapus'])) {
-    $id_project = $_POST['id_project'];
+// if (isset($_POST['hapus'])) {
+//     $id_project = $_POST['id_project'];
 
-    // query untuk hapus data Admin
-    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
-    if ($hapus_project) {
-        echo "
-        <script>
-            alert('Data Berhasil Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    } else {
-        echo "
-        <script>
-            alert('Data Gagal Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    }
-}
+//     // query untuk hapus data Admin
+//     $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
+//     if ($hapus_project) {
+//         echo "
+//         <script>
+//             alert('Data Berhasil Dihapus!');
+//             document.location.href = 'index.php';
+//         </script>
+//         ";
+//     } else {
+//         echo "
+//         <script>
+//             alert('Data Gagal Dihapus!');
+//             document.location.href = 'index.php';
+//         </script>
+//         ";
+//     }
+// }
 
 // Coding untuk edit data admin
-if (isset($_POST['edit'])) {
-    $id_project = $_POST['id_project'];
-    $nama_projek = $_POST['nama_projek'];
-    $nama_cr = $_POST['nama_cr'];
-    $menu = $_POST['menu'];
+// if (isset($_POST['edit'])) {
+//     $id_project = $_POST['id_project'];
+//     $nama_projek = $_POST['nama_projek'];
+//     $nama_cr = $_POST['nama_cr'];
+//     $menu = $_POST['menu'];
 
-    // Query untuk edit data
-    $edit_projek = mysqli_query($conn, "UPDATE project set nama_project = '$nama_projek', nama_cr = '$nama_cr', menu = '$menu' WHERE id_project = '$id_project'");
-    if ($edit_projek) {
-        echo "
-        <script>
-            alert('Data Berhasil Diedit!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    } else {
-        echo "
-        <script>
-            alert('Data Gagal Diedit!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    }
-}
+//     // Query untuk edit data
+//     $edit_projek = mysqli_query($conn, "UPDATE project set nama_project = '$nama_projek', nama_cr = '$nama_cr', menu = '$menu' WHERE id_project = '$id_project'");
+//     if ($edit_projek) {
+//         echo "
+//         <script>
+//             alert('Data Berhasil Diedit!');
+//             document.location.href = 'index.php';
+//         </script>
+//         ";
+//     } else {
+//         echo "
+//         <script>
+//             alert('Data Gagal Diedit!');
+//             document.location.href = 'index.php';
+//         </script>
+//         ";
+//     }
+// }
