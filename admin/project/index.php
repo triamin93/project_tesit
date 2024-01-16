@@ -272,6 +272,10 @@
                             <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" required>
                         </div>
                         <div class="form-group">
+                            <label for="customer_pic">Customer PIC</label>
+                            <input type="text" name="customer_pic" placeholder="Masukkan Customer PIC" class="form-control" id="customer_pic" required>
+                        </div>
+                        <div class="form-group">
                             <label for="tanggal_diterima">Tanggal Diterima</label>
                             <input type="date" name="tanggal_diterima" class="form-control" id="tanggal_diterima" required>
                         </div>
@@ -286,17 +290,17 @@
                         <div class="form-group">
                             <label for="user">Nama User</label>
                             <br>
-                            <select class="form-control multiple-select" id="user" name="user[]" multiple="multiple" data-placeholder="Select a State">
+                            <select class="form-control multiple-select" id="user" name="user[]" multiple="multiple">
                                 <?php
-                                // Query untuk menampilkan nama barang
-                                $user = mysqli_query($conn, "SELECT * FROM user");
+                                // Query untuk menampilkan nama user
+                                $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
                                 while ($data = mysqli_fetch_array($user)) {
                                 ?>
                                     <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
                                 <?php
                                 }
                                 ?>
-                            </select> 
+                            </select>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-lg btn-block" name="tambah">Tambah</button>

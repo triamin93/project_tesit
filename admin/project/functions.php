@@ -20,13 +20,27 @@ function dateIndonesian($date)
 if (isset($_POST['tambah'])) {
     $nama_projek = $_POST['nama_projek'];
     $nama_cr = $_POST['nama_cr'];
-    $no_cr = $_POST['tanggal_diterima'];
     $no_cr = $_POST['no_cr'];
-    $no_cr = $_POST['no_cr'];
-    $no_cr = $_POST['no_cr'];
+    $customer_pic = $_POST['customer_pic'];
+    $tanggal_diterima = $_POST['tanggal_diterima'];
+    $tanggal_mulai = $_POST['tanggal_mulai'];
+    $tanggal_selesai = $_POST['tanggal_selesai'];
+    $user = $_POST['user'];
 
-    // Query Tambah projek
-    $tambah_projek = mysqli_query($conn, "INSERT INTO project (nama_project, nama_cr, menu) values('$nama_projek', '$nama_cr', '$menu')");
+    // Query Tambah Projek (Sukses)
+    $tambah_projek = mysqli_query($conn, "INSERT INTO project (nama_project, nama_cr, no_cr, customer_pic, tanggal_diterima, tanggal_mulai, tanggal_selesai) values('$nama_projek', '$nama_cr', '$no_cr', '$customer_pic', '$tanggal_diterima', '$tanggal_mulai', '$tanggal_selesai')");
+
+    // mengambil data id_project terbaru
+    $project = mysqli_query($conn, "SELECT id_project FROM project ORDER BY id_project DESC");
+    $data = mysqli_fetch_array($project);
+    $first_id = $data['id_project'][0];
+
+    // Query Tambah Akses
+    // foreach () ;
+    // $tambah_akses = mysqli_query($conn, "INSERT INTO akses (id_project, id_user) VALUES ('','')");
+
+    // endforeach;
+
     if ($tambah_projek) {
         echo "
         <script>
