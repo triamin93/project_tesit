@@ -25,7 +25,7 @@ if (isset($_POST['tambah'])) {
     $tanggal_diterima = $_POST['tanggal_diterima'];
     $tanggal_mulai = $_POST['tanggal_mulai'];
     $tanggal_selesai = $_POST['tanggal_selesai'];
-    $user = $_POST['user'];
+    $users = $_POST['user'];
 
     // Query Tambah Projek (Sukses)
     $tambah_projek = mysqli_query($conn, "INSERT INTO project (nama_project, nama_cr, no_cr, customer_pic, tanggal_diterima, tanggal_mulai, tanggal_selesai) values('$nama_projek', '$nama_cr', '$no_cr', '$customer_pic', '$tanggal_diterima', '$tanggal_mulai', '$tanggal_selesai')");
@@ -33,15 +33,14 @@ if (isset($_POST['tambah'])) {
     // mengambil data id_project terbaru
     $project = mysqli_query($conn, "SELECT id_project FROM project ORDER BY id_project DESC");
     $data = mysqli_fetch_array($project);
-    $first_id = $data['id_project'][0];
+    $first_id = $data['id_project'];
 
     // Query Tambah Akses
-    // foreach () ;
-    // $tambah_akses = mysqli_query($conn, "INSERT INTO akses (id_project, id_user) VALUES ('','')");
+    foreach ($users as $user) {
+        $tambah_akses = mysqli_query($conn, "INSERT INTO akses (id_project, id_user) VALUES ('$first_id', '$user')");
+    }
 
-    // endforeach;
-
-    if ($tambah_projek) {
+    if ($tambah_projek&&$tambah_akses) {
         echo "
         <script>
             alert('Data Berhasil Ditambahkan!');
@@ -58,28 +57,30 @@ if (isset($_POST['tambah'])) {
     }
 }
 
-// Coding untuk hapus data admin
-// if (isset($_POST['hapus'])) {
-//     $id_project = $_POST['id_project'];
+//Coding untuk hapus data project
+if (isset($_POST['hapus'])) {
+    $id_project = $_POST['id_project'];
 
-//     // query untuk hapus data Admin
-//     $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
-//     if ($hapus_project) {
-//         echo "
-//         <script>
-//             alert('Data Berhasil Dihapus!');
-//             document.location.href = 'index.php';
-//         </script>
-//         ";
-//     } else {
-//         echo "
-//         <script>
-//             alert('Data Gagal Dihapus!');
-//             document.location.href = 'index.php';
-//         </script>
-//         ";
-//     }
-// }
+    // query untuk hapus data project
+    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
+    $hapus_akses = mysqli_query($conn, "DELETE FROM akses WHERE id_project = '$id_project'");
+
+    if ($hapus_project&&$hapus_akses) {
+        echo "
+        <script>
+            alert('Data Berhasil Dihapus!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            alert('Data Gagal Dihapus!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    }
+}
 
 // Coding untuk edit data admin
 // if (isset($_POST['edit'])) {

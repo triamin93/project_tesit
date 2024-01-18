@@ -128,7 +128,25 @@
                                         // Pengulangan data admin
                                         while ($data = mysqli_fetch_array($project)) :
                                         ?>
+                                        <!-- mengambil data id project -->
+                                        <?php 
+                                            $id_project = $data['id_project'];
+                                        ?>
+                                        <!-- mengambil data macam-macam user berdasarkan project -->
+                                        <?php 
+                                            $ambil_data_user_perproject = "SELECT id_user FROM akses WHERE id_project = '$id_project'";
+                                            $data_user_perproject_run = mysqli_query($conn, $ambil_data_user_perproject);
+
+                                            $users_project = [];
+
+                                            foreach($data_user_perproject_run  as $user_project_row)
+                                            {
+                                                $users_project[] = $user_project_row['id_user'];
+                                            }
+                                        ?>
                                             <tr>
+                                                
+                                                
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_project']; ?></td>
                                                 <td><?= $data['nama_cr']; ?></td>
@@ -137,18 +155,44 @@
                                                 <td><?= $data['tanggal_diterima']; ?></td>
                                                 <td><?= $data['tanggal_mulai']; ?></td>
                                                 <td><?= $data['tanggal_selesai']; ?></td>
-                                                <td></td>
+                                                <td><?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project;"); ?>
+                                                    <?php while ($nama_user = mysqli_fetch_array($users)) : ?>
+                                                        <p> <?php echo $nama_user['nama_lengkap']; ?> </p> 
+                                                    <?php endwhile; ?>
+                                                </td>
                                                 <td>
-                                                    <!-- Tombol untuk edit data admin -->
+                                                    <!-- Tombol untuk edit data project -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_project']; ?>">
                                                         <i class="fas fa-edit mr-1"></i>Ubah
                                                     </button>
-                                                    <!-- tombol untuk hapus data admin -->
+                                                    <!-- tombol untuk hapus data project -->
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_project']; ?>">
                                                         <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>
+                                            <!-- modal hapus -->
+                                            <div class="modal fade" id="delete<?php echo $data['id_project']; ?>">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <!-- Modal Header -->
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Hapus User</h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <!-- Modal body -->
+                                                        <!-- Form untuk hapus -->
+                                                        <form method="POST">
+                                                            <div class="modal-body">
+                                                                <p>Apakah Anda Yakin Menghapus <?= $data['nama_project']; ?> ?</p>
+                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
+                                                                <br>
+                                                                <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <!-- Modal edit -->
                                             <div class="modal fade" id="edit<?php echo $data['id_project']; ?>">
@@ -168,13 +212,12 @@
                                                                 <div class="form-group">
                                                                     <label for="nama_projek">Nama Projek</label>
                                                                     <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek" class="form-control" id="nama_projek" value="<?= $data['nama_project']; ?>" required>
-                                                                </div>
                                                                 <div class="form-group">
                                                                     <label for="nama_cr">Nama CR</label>
                                                                     <input type="text" name="nama_cr" placeholder="Masukkan Nanam CR" class="form-control" id="nama_cr" value="<?= $data['nama_cr']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="no_cr">Nama CR</label>
+                                                                    <label for="no_cr">No CR</label>
                                                                     <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" value="<?= $data['no_cr']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
@@ -195,12 +238,20 @@
                                                                     <select class="form-control multiple-select" id="useredit" name="useredit[]" multiple="multiple" >
                                                                         <?php
                                                                         // Query untuk menampilkan nama barang
-                                                                        $user = mysqli_query($conn, "SELECT * FROM user");
-                                                                        while ($data = mysqli_fetch_array($user)) {
+                                                                        $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
+
+                                                                        //Kurang program
+
+                                                                        while ($data = mysqli_fetch_array($user)) :
                                                                         ?>
-                                                                            <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                                                            <option 
+                                                                                value="<?php echo $data['id_user']; ?>">
+                                                                                <?php echo in_array($data['id_user'], $users_project);?>
+
+                                                                                <?php echo $data['nama_lengkap']; ?>
+                                                                            </option>
                                                                         <?php
-                                                                        }
+                                                                        endwhile;
                                                                         ?>
                                                                     </select> 
                                                                 </div>
@@ -211,28 +262,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- modal hapus -->
-                                            <div class="modal fade" id="delete<?php echo $data['id_project']; ?>">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Hapus Projek</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                        <!-- Modal body -->
-                                                        <!-- Form untuk hapus -->
-                                                        <form method="POST">
-                                                            <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus Projek "<?= $data['nama_project']; ?>" dengan nama CR & No Dev "<?= $data['nama_cr']; ?>" di Menu "<?= $data['menu']; ?>" ?</p>
-                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
-                                                                <br>
-                                                                <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         <?php
                                         endwhile;
                                         ?>
