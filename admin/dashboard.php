@@ -194,7 +194,7 @@ if ($level != "admin") {
                                         <tr>
                                             <th>No</th>
                                             <th>Projek</th>
-                                            <th>Menu</th>
+                                            <th>No CR</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -208,7 +208,7 @@ if ($level != "admin") {
                                             <tr>
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_project']; ?></td>
-                                                <td><?= $data['menu']; ?></td>
+                                                <td><?= $data['no_cr']; ?></td>
                                             </tr>
                                         <?php
                                         endwhile;
