@@ -94,7 +94,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Data Projek</h1>
+                    <h1 class="mt-4">Rekapitulasi Projek</h1>
                     <div class="card mb-4">
                         <div class="card-header">
                             <!-- Tombol Tambah Projek -->
