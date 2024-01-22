@@ -155,7 +155,7 @@
                                                 <td><?= $data['tanggal_diterima']; ?></td>
                                                 <td><?= $data['tanggal_mulai']; ?></td>
                                                 <td><?= $data['tanggal_selesai']; ?></td>
-                                                <td><?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project;"); ?>
+                                                <td><?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project';"); ?>
                                                     <?php while ($nama_user = mysqli_fetch_array($users)) : ?>
                                                         <p> <?php echo $nama_user['nama_lengkap']; ?> </p> 
                                                     <?php endwhile; ?>
