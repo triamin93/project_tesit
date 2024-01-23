@@ -94,14 +94,16 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
-                    <h1 class="mt-4">Data Projek</h1>
+                    <h1 class="mt-4">Rekapitulasi Projek</h1>
                     <div class="card mb-4">
                         <div class="card-header">
                             <!-- Tombol Tambah Projek -->
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus mr-1"></i>
                                 Tambah
                             </button>
-                        </div>
+                            <div class="float-right">
+		                        <a href="projek_excel.php" target="_blank" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Eksport Excel</a>
+                            </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
