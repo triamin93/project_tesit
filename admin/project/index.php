@@ -1,8 +1,11 @@
 <?php
+    // Memanggil fungsi start session
     session_start();
-    // memanggil fungsi 
+
+    // memanggil fungsi program
     require 'functions.php';
 
+    // Fungsi untuk mengecek session user
     // jika tidak ada username yang masuk
     if (!isset($_SESSION["username"])) {
         echo "
@@ -37,13 +40,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Data Projek</title>
+    <title>Rekapitulasi Projek</title>
     <style>
         table thead tr th {
             text-align: center;
         }
     </style>
+
+    <!-- Memanggil CSS -->
     <link href="../assets/styles.css" rel="stylesheet" />
+
     <!-- CSS Datatable -->
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -62,11 +68,11 @@
     <!-- HEADER -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TESIT</a>
-        <!-- tombol mengatur sidebar -->
+        <!-- tombol untuk mengatur menu sidebar (menampilkan atau tidak menu side bar)-->
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
-            <!-- tombol logout -->
+            <!-- tombol untuk logout -->
                 <a class="btn btn-danger" href="../logout.php" role="button"><i class="fas fa-sign-out-alt"></i>&nbsp;Keluar</a>
             </div>
         </form>
@@ -77,6 +83,7 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
+                    <!-- Semua tombol Menu -->
                     <div class="sb-sidenav-menu-heading">Menu</div>
                         <!-- link Dashboard -->
                         <a class="nav-link" href="../dashboard.php">
@@ -101,6 +108,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid">
+                    <!-- Header nama tampilan konten -->
                     <h1 class="mt-4">Rekapitulasi Projek</h1>
                     <div class="card mb-4">
                         <div class="card-header">
@@ -128,31 +136,34 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // mengambil query data admin
-                                        $project = mysqli_query($conn, "SELECT * FROM project");
-                                        $i = 1;
-                                        // Pengulangan data admin
-                                        while ($data = mysqli_fetch_array($project)) :
+                                            // mengambil query data admin
+                                            $project = mysqli_query($conn, "SELECT * FROM project");
+                                            $i = 1;
+
+                                            // Pengulangan data admin
+                                            while ($data = mysqli_fetch_array($project)) :
                                         ?>
+
                                         <!-- mengambil data id project -->
                                         <?php 
                                             $id_project = $data['id_project'];
                                         ?>
+
                                         <!-- mengambil data macam-macam user berdasarkan project -->
                                         <?php 
+                                            // Query untuk menampilkan user berdasarkan id_projek
                                             $ambil_data_user_perproject = "SELECT id_user FROM akses WHERE id_project = '$id_project'";
                                             $data_user_perproject_run = mysqli_query($conn, $ambil_data_user_perproject);
 
+                                            // membuat variabel untuk menampung data array
                                             $users_project = [];
-
-                                            foreach($data_user_perproject_run  as $user_project_row)
-                                            {
+                                            
+                                            // pengulanggan untuk menampilkan user berdasarkan id
+                                            foreach($data_user_perproject_run  as $user_project_row) :
                                                 $users_project[] = $user_project_row['id_user'];
-                                            }
+                                            endforeach;
                                         ?>
                                             <tr>
-                                                
-                                                
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_project']; ?></td>
                                                 <td><?= $data['nama_cr']; ?></td>
@@ -161,36 +172,48 @@
                                                 <td><?= $data['tanggal_diterima']; ?></td>
                                                 <td><?= $data['tanggal_mulai']; ?></td>
                                                 <td><?= $data['tanggal_selesai']; ?></td>
-                                                <td><?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project';"); ?>
+
+                                                <!-- Menampilkan user berdasarkan projek -->
+                                                <td>
+                                                    <!-- Query untuk menampilkan nama user -->
+                                                    <?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project';"); ?>
+
+                                                    <!-- Pengulangan untuk menampilkan beberapa nama user -->
                                                     <?php while ($nama_user = mysqli_fetch_array($users)) : ?>
-                                                        <p> <?php echo $nama_user['nama_lengkap']; ?> </p> 
+                                                        <?php echo $nama_user['nama_lengkap'] . ', '; ?>
                                                     <?php endwhile; ?>
                                                 </td>
+                                                <!-- Menampilkan tombol aksi -->
                                                 <td>
                                                     <!-- Tombol untuk edit data project -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_project']; ?>">
                                                         <i class="fas fa-edit mr-1"></i>Ubah
                                                     </button>
+
                                                     <!-- tombol untuk hapus data project -->
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_project']; ?>">
                                                         <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <!-- modal hapus -->
+
+                                            <!-- Form Modal hapus -->
                                             <div class="modal fade" id="delete<?php echo $data['id_project']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Hapus User</h4>
+                                                            <h4 class="modal-title">Hapus Projek</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Modal body -->
-                                                        <!-- Form untuk hapus -->
+                                                        <!-- Pesan untuk hapus projek -->
                                                         <form method="POST">
                                                             <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus <?= $data['nama_project']; ?> ?</p>
+                                                                <p>Apakah Anda Yakin Menghapus Data Projek ?</p>
+                                                                <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
+                                                                <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
+                                                                <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
                                                                 <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
                                                                 <br>
                                                                 <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
@@ -200,7 +223,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Modal edit -->
+                                            <!-- Form Modal edit -->
                                             <div class="modal fade" id="edit<?php echo $data['id_project']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -210,7 +233,7 @@
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
                                                         <!-- Modal body -->
-                                                        <!-- Form untuk edit -->
+                                                        <!-- Form untuk edit data projek -->
                                                         <form method="POST">
                                                             <div class="modal-body">
                                                                 <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
@@ -247,13 +270,13 @@
                                                                     <br>
                                                                     <select class="form-control multiple-select" id="useredit" name="useredit[]" multiple="multiple" >
                                                                         <?php
-                                                                        // Query untuk menampilkan nama barang
+                                                                        // Query untuk menampilkan nama user
                                                                         $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
 
-                                                                        if(mysqli_num_rows($user) > 0)
-                                                                        {
-                                                                            foreach($user as $row)
-                                                                            {
+                                                                        // Kondisi untuk mengecek datanya ada atau tidak
+                                                                        if(mysqli_num_rows($user) > 0):
+                                                                            // Pengulangan untuk menampilkan nama user
+                                                                            foreach($user as $row):
                                                                                 ?>
                                                                                     <option
                                                                                         value="<?=$row['id_user']?>"
@@ -262,9 +285,8 @@
                                                                                         <?=$row['nama_lengkap'] ?>
                                                                                     </option>
                                                                                 <?php
-                                                                            }   
-                                                                        }
-
+                                                                            endforeach;
+                                                                        endif;
                                                                         ?>
                                                                     </select> 
                                                                 </div>
@@ -288,8 +310,8 @@
             </main>
         </div>
     </div>
-    <!-- All modal -->
-    <!-- Modal tambah -->
+
+    <!-- Form Modal tambah -->
     <div class="modal fade" id="tambah">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -299,7 +321,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
-                <!-- Form untuk tambah -->
+                <!-- Form untuk tambah data projek -->
                 <form method="POST">
                     <div class="modal-body">
                         <div class="form-group">
@@ -336,12 +358,13 @@
                             <select class="form-control multiple-select" id="user" name="user[]" multiple="multiple">
                                 <?php
                                 // Query untuk menampilkan nama user
-                                $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
-                                while ($data = mysqli_fetch_array($user)) {
+                                    $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
+                                    // Pengulangan untuk menampilkan data user
+                                    while ($data = mysqli_fetch_array($user)) :
                                 ?>
-                                    <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                        <option value="<?php echo $data['id_user']; ?>"><?php echo $data['nama_lengkap']; ?></option>
                                 <?php
-                                }
+                                    endwhile;
                                 ?>
                             </select>
                         </div>
@@ -353,19 +376,19 @@
         </div>
     </div>
 
-    <!-- JQuery -->
+    <!-- Library JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap 4 -->
+    <!-- Library Bootstrap 4 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
-    <!-- File JS -->
+    <!-- Library File JS -->
     <script src="../assets/scripts.js"></script>
 
-    <!-- Chart JS -->
+    <!-- Library Chart JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
-    <!-- Datatable -->
+    <!-- Library Datatable -->
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -377,9 +400,11 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
 
-    <!-- Select2 -->
+    <!-- Library Select2 -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+    <!-- Script Select2 -->
     <script>
         $(".multiple-select").select2({
             // maximumSelectionLength: 2
@@ -389,15 +414,18 @@
             theme: "bootstrap"
         });
     </script>
+
+    <!-- Script Datatable -->
     <script>
         // Call the dataTables jQuery plugin
         $(document).ready(function() {
             $('#dataTable').DataTable({
+                // Bahasa DataTable : Bahasa Indonesia
                 language: {
-                    // DataTable Bahasa Indonesia
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json'
                 },
                 dom: 'Bfrtip',
+                // Tombol di Datatabel
                 buttons: [
                     {
                         extend: 'excelHtml5',
@@ -414,8 +442,7 @@
                         ]
                     },
                     'pageLength'
-                ],
-                select: true
+                ]
             });
         });
     </script>
