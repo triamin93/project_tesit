@@ -82,28 +82,67 @@ if (isset($_POST['hapus'])) {
     }
 }
 
-// Coding untuk edit data admin
-// if (isset($_POST['edit'])) {
-//     $id_project = $_POST['id_project'];
-//     $nama_projek = $_POST['nama_projek'];
-//     $nama_cr = $_POST['nama_cr'];
-//     $menu = $_POST['menu'];
+// Coding untuk edit data project
+if (isset($_POST['edit'])) {
+    // Post untuk tabel projek
+    $id_project = $_POST['id_project'];
+    $nama_projek = $_POST['nama_projek'];
+    $nama_cr = $_POST['nama_cr'];
+    $no_cr = $_POST['no_cr'];
+    $customer_pic = $_POST['customer_pic'];
+    $tanggal_diterima = $_POST['tanggal_diterima'];
+    $tanggal_mulai = $_POST['tanggal_mulai'];
+    $tanggal_selesai = $_POST['tanggal_selesai'];
+    // Post untuk tabel akses
+    $users = $_POST['useredit'];
 
-//     // Query untuk edit data
-//     $edit_projek = mysqli_query($conn, "UPDATE project set nama_project = '$nama_projek', nama_cr = '$nama_cr', menu = '$menu' WHERE id_project = '$id_project'");
-//     if ($edit_projek) {
-//         echo "
-//         <script>
-//             alert('Data Berhasil Diedit!');
-//             document.location.href = 'index.php';
-//         </script>
-//         ";
-//     } else {
-//         echo "
-//         <script>
-//             alert('Data Gagal Diedit!');
-//             document.location.href = 'index.php';
-//         </script>
-//         ";
-//     }
-// }
+    // Query untuk edit data projek
+    $edit_projek = mysqli_query($conn, "UPDATE project set nama_project = '$nama_projek', nama_cr = '$nama_cr', no_cr = '$no_cr', customer_pic = '$customer_pic', tanggal_diterima = '$tanggal_diterima', tanggal_mulai = '$tanggal_mulai', tanggal_selesai = '$tanggal_selesai' WHERE id_project = '$id_project'");
+
+    // untuk ambil data akses
+    $ambil_data_user_perproject = "SELECT id_user FROM akses WHERE id_project = '$id_project'";
+    $data_user_perproject_run = mysqli_query($conn, $ambil_data_user_perproject);
+
+    $users_project = [];
+
+    foreach($data_user_perproject_run  as $user_project_row)
+    {
+        $users_project[] = $user_project_row['id_user'];
+    }
+
+    // tambah data user baru
+    foreach($users as $inputValues_User)
+    {
+        if(!in_array($inputValues_User, $users_project))
+        {
+            $tambahuser = "INSERT INTO akses (id_project, id_user) VALUES ('$id_project','$inputValues_User')";
+            $tambahuser_run = mysqli_query($conn, $tambahuser);
+        }
+    }
+
+    // hapus data user lama
+    foreach($users_project as $fetchedrow_user)
+    {
+        if(!in_array($fetchedrow_user, $users))
+        {
+            $deleteuser = "DELETE FROM akses WHERE id_project = '$id_project' AND id_user = '$fetchedrow_user'";
+            $deleteuser_run = mysqli_query($conn, $deleteuser);
+        }
+    }
+
+    if ($edit_projek&&($tambahuser_run||$deleteuser_run)) {
+        echo "
+        <script>
+            alert('Data Berhasil Diedit!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            alert('Data Gagal Diedit!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    }
+}
