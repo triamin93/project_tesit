@@ -221,6 +221,10 @@
                                                                     <input type="text" name="no_cr" placeholder="Masukkan No CR" class="form-control" id="no_cr" value="<?= $data['no_cr']; ?>" required>
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label for="customer_pic">Customer PIC</label>
+                                                                    <input type="text" name="customer_pic" placeholder="Masukkan Nama PIC" class="form-control" id="customer_pic" value="<?= $data['customer_pic']; ?>" required>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="tanggal_diterima">Tanggal Diterima</label>
                                                                     <input type="date" name="tanggal_diterima" class="form-control" id="tanggal_diterima" value="<?= $data['tanggal_diterima']; ?>" required>
                                                                 </div>
@@ -240,18 +244,21 @@
                                                                         // Query untuk menampilkan nama barang
                                                                         $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
 
-                                                                        //Kurang program
+                                                                        if(mysqli_num_rows($user) > 0)
+                                                                        {
+                                                                            foreach($user as $row)
+                                                                            {
+                                                                                ?>
+                                                                                    <option
+                                                                                        value="<?=$row['id_user']?>"
+                                                                                        <?= in_array($row['id_user'], $users_project) ? 'selected':''?>
+                                                                                    >
+                                                                                        <?=$row['nama_lengkap'] ?>
+                                                                                    </option>
+                                                                                <?php
+                                                                            }   
+                                                                        }
 
-                                                                        while ($data = mysqli_fetch_array($user)) :
-                                                                        ?>
-                                                                            <option 
-                                                                                value="<?php echo $data['id_user']; ?>">
-                                                                                <?php echo in_array($data['id_user'], $users_project);?>
-
-                                                                                <?php echo $data['nama_lengkap']; ?>
-                                                                            </option>
-                                                                        <?php
-                                                                        endwhile;
                                                                         ?>
                                                                     </select> 
                                                                 </div>
