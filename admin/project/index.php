@@ -101,9 +101,6 @@
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus mr-1"></i>
                                 Tambah
                             </button>
-                            <div class="float-right">
-		                        <a href="projek_excel.php" target="_blank" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Eksport Excel</a>
-                            </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
