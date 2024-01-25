@@ -81,8 +81,13 @@ if ($level != "admin") {
                         </a>
                         <!-- link Dashboard -->
                         <a class="nav-link" href="../project/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
+                        </a>
+                        <!-- link Audit Trail -->
+                        <a class="nav-link" href="../audit/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Audit Trail
                         </a>
                         <!-- link akses -->
                         <!-- <a class="nav-link" href="../akses/index.php">
@@ -136,11 +141,11 @@ if ($level != "admin") {
                                                 <td>
                                                     <!-- Tombol untuk edit data admin -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_user']; ?>">
-                                                        <i class="fas fa-edit mr-1"></i>Edit
+                                                        <i class="fas fa-edit mr-1"></i>Ubah
                                                     </button>
                                                     <!-- tombol untuk hapus data admin -->
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_user']; ?>">
-                                                        <i class="fas fa-trash-alt mr-1"></i>Delete
+                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>

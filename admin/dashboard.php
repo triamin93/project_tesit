@@ -27,6 +27,19 @@ if ($level != "admin") {
         ";
     exit;
 }
+
+// JUMLAH DATA
+// Mengambil Data User
+$user = mysqli_query($conn, "SELECT * FROM user");
+$jumlah_user = mysqli_num_rows($user);
+
+// Mengambil Data Projek
+$projek = mysqli_query($conn, "SELECT * FROM project");
+$jumlah_projek = mysqli_num_rows($projek);
+
+// Mengambil Data Projek yang Sudah Selesai
+
+// Mengambil Data Projek yang Belum Selesai
 ?>
 
 <!DOCTYPE html>
@@ -73,9 +86,10 @@ if ($level != "admin") {
         <a class="navbar-brand" href="#">TESIT</a>
         <!-- tombol menampilkan dan menyembunyikan sidebar  -->
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
+        
+        <!-- Tombol logout -->
         <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
             <div class="input-group">
-            <!-- Tombol logout -->
                 <a class="btn btn-danger" href="logout.php" role="button"><i class="fas fa-sign-out-alt"></i>&nbsp;Keluar</a>
             </div>
         </form>
@@ -99,14 +113,14 @@ if ($level != "admin") {
                         </a>
                         <!-- link Projek -->
                         <a class="nav-link" href="project/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
                         </a>
-                        <!-- link aksess -->
-                        <!-- <a class="nav-link" href="akses/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Akses
-                        </a> -->
+                        <!-- link Audit Trail -->
+                        <a class="nav-link" href="audit/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Audit Trail
+                        </a>
                         <!-- link Menu FCC -->
                         <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
@@ -121,7 +135,6 @@ if ($level != "admin") {
                             </nav>
                         </div> -->
                         <!-- Menampilkan nama project dari database di sidebar -->
-
                     </div>
                 </div>
             </nav>
@@ -139,8 +152,8 @@ if ($level != "admin") {
                                     <div class="card-body-icon">
                                         <i class="fas fa-users"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_admin; ?></div> -->
+                                    <div class="card-title">USER</div>
+                                    <div class="display-4"><?php echo $jumlah_user; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -151,8 +164,8 @@ if ($level != "admin") {
                                     <div class="card-body-icon">
                                         <i class="fas fa-boxes"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barang; ?></div> -->
+                                    <div class="card-title">PROJEK</div>
+                                    <div class="display-4"><?php echo $jumlah_projek; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +176,7 @@ if ($level != "admin") {
                                     <div class="card-body-icon">
                                         <i class="fas fa-sign-in-alt"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
+                                    <div class="card-title">SELESAI</div>
                                     <!-- <div class="display-4"><?php echo $jumlah_barangmasuk; ?></div> -->
                                 </div>
                             </div>
@@ -175,7 +188,7 @@ if ($level != "admin") {
                                     <div class="card-body-icon">
                                         <i class="fas fa-sign-out-alt"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
+                                    <div class="card-title">PROSES</div>
                                     <!-- <div class="display-4"><?php echo $jumlah_barangkeluar; ?></div> -->
                                 </div>
                             </div>

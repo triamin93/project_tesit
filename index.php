@@ -9,27 +9,56 @@ $conn = mysqli_connect("localhost", "root", "", "testscript");
 if (isset($_POST["login"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    // memanggil query admin
+
+    // Memanggil query user
     $result = mysqli_query($conn, "SELECT * FROM user WHERE username = '$username'");
-    //cek username
+
+    // Cek username
     if (mysqli_num_rows($result) === 1) {
-        // cek password 
+
+        // Cek password 
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
-            // cek login untuk pemilik toko
+
+            // Cek login untuk pemilik toko
             if ($row["level"] == "admin") {
-                // membuat sessionnya pemilik
+
+                // Membuat sessionnya pemilik
                 $_SESSION["username"] = $username;
                 $_SESSION["level"] = "admin";
+
+                // Mengambil ID user 
+                $id_user = $row["id_user"];
+
+                // Membuat status login
+                $status = "Login";
+
+                // Membuat Query untuk update waktu dan audit login
                 $last_login = mysqli_query($conn, "UPDATE user set last_login = now() WHERE username = '$username'");
+                $audit_login = mysqli_query($conn, "INSERT audit_login (id_user, status) values('$id_user', '$status')");
+
+                // Mengarahkan lokasi dashboard admin
                 header("location: admin/dashboard.php");
                 exit;
+
+
                 // cek login untuk pegawai
             } else if ($row["level"] == "operator") {
                 // membuat sessionnya pegawai
                 $_SESSION["username"] = $username;
                 $_SESSION["level"] = "admin";
+
+                // Mengambil ID User
+                $id_user = $row["id_user"];
+
+                // Menbuat status login
+                $status = "Login";
+
+                // Membuat Query untuk update waktu dan audit login
                 $last_login = mysqli_query($conn, "UPDATE user set last_login = now() WHERE username = '$username'");
+                $audit_login = mysqli_query($conn, "INSERT audit_login (id_user, status) values('$id_user', '$status')");
+
+                // Mengarahkan lokasi dashboard operator
                 header("location: operator/dashboard.php");
                 exit;
             }

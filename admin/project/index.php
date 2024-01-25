@@ -97,8 +97,13 @@
                         </a>
                         <!-- link projek -->
                         <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
+                        </a>
+                        <!-- link Audit Trail -->
+                        <a class="nav-link" href="../audit/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Audit Trail
                         </a>
                     </div>
                 </div>
@@ -116,6 +121,7 @@
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus mr-1"></i>
                                 Tambah
                             </button>
+                        </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
@@ -180,7 +186,7 @@
 
                                                     <!-- Pengulangan untuk menampilkan beberapa nama user -->
                                                     <?php while ($nama_user = mysqli_fetch_array($users)) : ?>
-                                                        <?php echo $nama_user['nama_lengkap'] . ', '; ?>
+                                                        <p><?php echo $nama_user['nama_lengkap']; ?></p>
                                                     <?php endwhile; ?>
                                                 </td>
                                                 <!-- Menampilkan tombol aksi -->
