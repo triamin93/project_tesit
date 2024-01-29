@@ -182,7 +182,7 @@
                                                 <!-- Menampilkan user berdasarkan projek -->
                                                 <td>
                                                     <!-- Query untuk menampilkan nama user -->
-                                                    <?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project';"); ?>
+                                                    <?php $users = mysqli_query($conn, "SELECT nama_lengkap FROM user INNER JOIN akses ON user.id_user = akses.id_user INNER JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project' ORDER BY nama_lengkap ASC;"); ?>
 
                                                     <!-- Pengulangan untuk menampilkan beberapa nama user -->
                                                     <?php while ($nama_user = mysqli_fetch_array($users)) : ?>
@@ -277,7 +277,7 @@
                                                                     <select class="form-control multiple-select" id="useredit" name="useredit[]" multiple="multiple" >
                                                                         <?php
                                                                         // Query untuk menampilkan nama user
-                                                                        $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
+                                                                        $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator' ORDER BY nama_lengkap ASC");
 
                                                                         // Kondisi untuk mengecek datanya ada atau tidak
                                                                         if(mysqli_num_rows($user) > 0):
@@ -364,7 +364,7 @@
                             <select class="form-control multiple-select" id="user" name="user[]" multiple="multiple">
                                 <?php
                                 // Query untuk menampilkan nama user
-                                    $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator'");
+                                    $user = mysqli_query($conn, "SELECT * FROM user WHERE level = 'operator' ORDER BY nama_lengkap ASC");
                                     // Pengulangan untuk menampilkan data user
                                     while ($data = mysqli_fetch_array($user)) :
                                 ?>

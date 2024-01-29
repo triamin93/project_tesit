@@ -15,6 +15,7 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
+// Mengambil level session
 $level = $_SESSION["level"];
 
 // jika level bukan pemilik toko (Super Admin)
@@ -52,7 +53,9 @@ $jumlah_projek = mysqli_num_rows($projek);
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Dashboard Admin</title>
+    <!-- Mengambil file CSS bootstrap -->
     <link href="assets/styles.css" rel="stylesheet" />
+    <!-- Style CSS di halaman ini -->
     <style>
         table thead tr th,
         td {
@@ -76,7 +79,10 @@ $jumlah_projek = mysqli_num_rows($projek);
             font-size: 80px;
         }
     </style>
+
+    <!-- Memanggil CSS Datatables -->
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
+    <!-- Memanggil Font Awasome 5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
@@ -162,7 +168,7 @@ $jumlah_projek = mysqli_num_rows($projek);
                             <div class="card bg-warning text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-boxes"></i>
+                                        <i class="fas fa-tasks"></i>
                                     </div>
                                     <div class="card-title">PROJEK</div>
                                     <div class="display-4"><?php echo $jumlah_projek; ?></div>
@@ -174,10 +180,10 @@ $jumlah_projek = mysqli_num_rows($projek);
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-sign-in-alt"></i>
+                                        <i class="fas fa-check-circle"></i>
                                     </div>
                                     <div class="card-title">SELESAI</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barangmasuk; ?></div> -->
+                                    <div class="display-4">12</div>
                                 </div>
                             </div>
                         </div>
@@ -186,19 +192,19 @@ $jumlah_projek = mysqli_num_rows($projek);
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-sign-out-alt"></i>
+                                        <i class="fas fa-clock"></i>
                                     </div>
                                     <div class="card-title">PROSES</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barangkeluar; ?></div> -->
+                                    <div class="display-4">12</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Table menampilkan testcase -->
+                    <!-- Table menampilkan projek -->
                     <div class="card mb-4">
                         <div class="card-header bg-info">
                             <i class="fas fa-table mr-1"></i>
-                            <b>Test Script yang Tersedia</b>
+                            <b>Projek yang Tersedia</b>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -235,6 +241,7 @@ $jumlah_projek = mysqli_num_rows($projek);
             </main>
         </div>
     </div>
+    <!--  -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="assets/scripts.js"></script>

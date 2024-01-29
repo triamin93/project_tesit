@@ -121,13 +121,13 @@ if ($level != "admin") {
                                             <th>Username</th>
                                             <th>Level</th>
                                             <th>Last Login</th>
-                                            <th>Aksiku</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         // mengambil query data admin
-                                        $user = mysqli_query($conn, "SELECT * FROM user");
+                                        $user = mysqli_query($conn, "SELECT * FROM user ORDER BY nama_lengkap ASC");
                                         $i = 1;
                                         // Pengulangan data admin
                                         while ($data = mysqli_fetch_array($user)) :
@@ -137,7 +137,7 @@ if ($level != "admin") {
                                                 <td><?= $data['nama_lengkap']; ?></td>
                                                 <td><?= $data['username']; ?></td>
                                                 <td><?= ucwords($data['level']); ?></td>
-                                                <td><?= dateIndonesian($data['last_login']) . " " . date_format(date_create($data['last_login']), "H:i"); ?></td>
+                                                <td><?= dateIndonesian($data['last_login']) . " " . date_format(date_create($data['last_login']), "H:i:s"); ?></td>
                                                 <td>
                                                     <!-- Tombol untuk edit data admin -->
                                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $data['id_user']; ?>">
