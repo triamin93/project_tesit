@@ -30,16 +30,16 @@ if ($level != "admin") {
 
 // JUMLAH DATA
 // ambil data barang
-$barang = mysqli_query($conn, "SELECT * FROM barang");
-$jumlah_barang = mysqli_num_rows($barang);
+// $barang = mysqli_query($conn, "SELECT * FROM barang");
+// $jumlah_barang = mysqli_num_rows($barang);
 
-// ambil data barang masuk
-$barangmasuk = mysqli_query($conn, "SELECT * FROM barangmasuk");
-$jumlah_barangmasuk = mysqli_num_rows($barangmasuk);
+// // ambil data barang masuk
+// $barangmasuk = mysqli_query($conn, "SELECT * FROM barangmasuk");
+// $jumlah_barangmasuk = mysqli_num_rows($barangmasuk);
 
-// ambil data barang keluar
-$barangkeluar = mysqli_query($conn, "SELECT * FROM barangkeluar");
-$jumlah_barangkeluar = mysqli_num_rows($barangkeluar);
+// // ambil data barang keluar
+// $barangkeluar = mysqli_query($conn, "SELECT * FROM barangkeluar");
+// $jumlah_barangkeluar = mysqli_num_rows($barangkeluar);
 
 ?>
 
