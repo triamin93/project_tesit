@@ -148,7 +148,7 @@ if ($level != "admin") {
                                         <i class="fas fa-boxes"></i>
                                     </div>
                                     <div class="card-title">XXX</div>
-                                    <div class="display-4"><?php echo $jumlah_barang; ?></div>
+                                    <!-- <div class="display-4"><?php echo $jumlah_barang; ?></div> -->
                                 </div>
                             </div>
                         </div>
@@ -161,7 +161,7 @@ if ($level != "admin") {
                                         <i class="fas fa-sign-in-alt"></i>
                                     </div>
                                     <div class="card-title">XXX</div>
-                                    <div class="display-4"><?php echo $jumlah_barangmasuk; ?></div>
+                                    <!-- <div class="display-4"><?php echo $jumlah_barangmasuk; ?></div> -->
                                 </div>
                             </div>
                         </div>
@@ -174,7 +174,7 @@ if ($level != "admin") {
                                         <i class="fas fa-sign-out-alt"></i>
                                     </div>
                                     <div class="card-title">XXX</div>
-                                    <div class="display-4"><?php echo $jumlah_barangkeluar; ?></div>
+                                    <!-- <div class="display-4"><?php echo $jumlah_barangkeluar; ?></div> -->
                                 </div>
                             </div>
                         </div>
@@ -194,23 +194,13 @@ if ($level != "admin") {
                                             <th>Menu</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php
-                                        // Query untuk mengambil data barang
-                                        $barang = mysqli_query($conn, "SELECT * FROM barang WHERE stok < 5 ORDER BY nama_barang ASC");
-                                        $i = 1;
-                                        // pengulangan menampilkan data barang
-                                        while ($data = mysqli_fetch_array($barang)) :
-                                        ?>
+                                    <!-- <tbody>
                                             <tr>
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_barang']; ?></td>
                                                 <td><?= $data['stok']; ?></td>
                                             </tr>
-                                        <?php
-                                        endwhile;
-                                        ?>
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
                             </div>
                         </div>
