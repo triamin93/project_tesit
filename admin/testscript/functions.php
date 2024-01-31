@@ -78,5 +78,10 @@ if(isset($_POST['upload'])){
     $namaFileBaru .= $ekstensi;
     move_uploaded_file($tmpName, 'upload/' . $namaFileBaru);
 
-    
+    // masukkan kodingan id project
+    echo "
+        <script>
+            document.location.href = 'testScript.php?id_project='$id_project';
+        </script>
+        ";
 }

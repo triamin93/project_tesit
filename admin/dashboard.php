@@ -127,6 +127,11 @@ $jumlah_projek = mysqli_num_rows($projek);
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
                         </a>
+                        <!-- link Test Script -->
+                        <a class="nav-link" href="testscript/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Test Script
+                        </a>
                         <!-- link Menu FCC -->
                         <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>

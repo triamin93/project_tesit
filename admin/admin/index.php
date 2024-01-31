@@ -89,11 +89,11 @@ if ($level != "admin") {
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
                         </a>
-                        <!-- link akses -->
-                        <!-- <a class="nav-link" href="../akses/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            Akses
-                        </a> -->
+                        <!-- link Test Script -->
+                        <a class="nav-link" href="../testscript/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Test Script
+                        </a>
                     </div>
                 </div>
             </nav>
