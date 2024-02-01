@@ -12,7 +12,7 @@
     $tmp_excel = $_GET["tmp_excel"];
 
     // Queary data project berdasarkan id
-    $excel = mysqli_query($conn, "SELECT * FROM excel WHERE tmp_excel = '$tmp_excel'");
+    $excel = mysqli_query($conn, "SELECT excel.nama_excel, excel.tmp_excel, excel.tanggal_upload, project.nama_project, project.no_cr, project.customer_pic FROM excel JOIN project ON excel.id_project = project.id_project WHERE excel.tmp_excel = '$tmp_excel'");
     
     // mengambil data project
     $data_excel = mysqli_fetch_assoc($excel);
@@ -113,20 +113,22 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
-                        <!-- link projek -->
-                        <a class="nav-link" href="index.php">
+                        <!-- link Projek -->
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="../project/index.php">Data Projek</a>
+                                <a class="nav-link" href="index.php">Data Test Script</a>
+                            </nav>
+                        </div>
                         <!-- link Audit Trail -->
                         <a class="nav-link" href="../audit/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
-                        </a>
-                        <!-- link Test Script -->
-                        <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
-                            Test Script
                         </a>
                     </div>
                 </div>
@@ -147,19 +149,19 @@
                                     <tbody>
                                         <tr>
                                             <td><b>Nama Projek</b></td>
-                                            <td>: <?php echo $data_excel['id_project']?></td>
-                                            <td><b>Nama Excel</b></td>
+                                            <td>: <?php echo $data_excel['nama_project']?></td>
+                                            <td><b>Nama Test Script</b></td>
                                             <td>: <?php echo $data_excel['nama_excel']?></td>
                                         </tr>
                                         <tr>
                                             <td><b>Nomor CR</b></td>
-                                            <td>: <?php echo $data_excel['id_project']?></td>
+                                            <td>: <?php echo $data_excel['no_cr']?></td>
                                             <td><b>Tanggal Upload</b></td>
                                             <td>: <?php echo dateIndonesian($data_excel['tanggal_upload'])?></td>
                                         </tr>
                                         <tr>
                                             <td><b>PIC</b></td>
-                                            <td>: <?php echo $data_excel['id_project']?></td>
+                                            <td>: <?php echo $data_excel['customer_pic']?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -167,11 +169,6 @@
                         </div>
                     </div>
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload" style="float: right;"><i class="fas fa-file-alt mr-1"></i>
-                                Upload File
-                            </button>
-                        </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
@@ -189,45 +186,47 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th><?php echo $first = $sheetData['0']['0'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['1'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['2'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['3'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['4'];?></th>                                            <th><?php echo $first = $sheetData['0']['5'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['6'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['7'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['8'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['9'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['10'];?></th>                                            <th><?php echo $first = $sheetData['0']['11'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['12'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['13'];?></th>
-                                            <th><?php echo $first = $sheetData['0']['14'];?></th>
+                                            <th><?php echo $headTestDate        = $sheetData['0']['0'];?></th>
+                                            <th><?php echo $headPIC             = $sheetData['0']['1'];?></th>
+                                            <th><?php echo $headTestCaseID      = $sheetData['0']['2'];?></th>
+                                            <th><?php echo $headModul           = $sheetData['0']['3'];?></th>
+                                            <th><?php echo $headFeature         = $sheetData['0']['4'];?></th>    
+                                            <th><?php echo $headTestCase        = $sheetData['0']['5'];?></th>
+                                            <th><?php echo $headTestType        = $sheetData['0']['6'];?></th>
+                                            <th><?php echo $headPrecondition    = $sheetData['0']['7'];?></th>
+                                            <th><?php echo $headTestStep        = $sheetData['0']['8'];?></th>
+                                            <th><?php echo $headTestData        = $sheetData['0']['9'];?></th>
+                                            <th><?php echo $headExpectedResult  = $sheetData['0']['10'];?></th>
+                                            <th><?php echo $headTCWebStatus     = $sheetData['0']['11'];?></th>
+                                            <th><?php echo $headSeverity        = $sheetData['0']['12'];?></th>
+                                            <th><?php echo $headNotes           = $sheetData['0']['13'];?></th>
+                                            <th><?php echo $headTCWebCapture    = $sheetData['0']['14'];?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             for($i=1;$i<count($sheetData);$i++): ?>
-                                            <tr>
-                                                <td><?php echo $i;?></td>
-                                                <td><?php echo $first = $sheetData[$i]['0'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['1'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['2'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['3'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['4'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['5'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['6'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['7'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['8'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['9'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['10'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['11'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['12'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['13'];?></td>
-                                                <td><?php echo $first = $sheetData[$i]['14'];?></td>
-                                            </tr>
-                                            <?php
-                                                endfor;
-                                            ?>
+                                        <tr>
+                                            <td><?php echo $i;?></td>
+                                            <td><?php echo $rowTestDate         = $sheetData[$i]['0'];?></td>
+                                            <td><?php echo $rowPIC              = $sheetData[$i]['1'];?></td>
+                                            <td><?php echo $rowTestCaseID       = $sheetData[$i]['2'];?></td>
+                                            <td><?php echo $rowModul            = $sheetData[$i]['3'];?></td>
+                                            <td><?php echo $rowFeature          = $sheetData[$i]['4'];?></td>
+                                            <td><?php echo $rowTestCase         = $sheetData[$i]['5'];?></td>
+                                            <td><?php echo $rowTestType         = $sheetData[$i]['6'];?></td>
+                                            <td><?php echo $rowPrecondition     = $sheetData[$i]['7'];?></td>
+                                            <td><?php echo $rowTestStep         = $sheetData[$i]['8'];?></td>
+                                            <td><?php echo $rowTestData         = $sheetData[$i]['9'];?></td>
+                                            <td><?php echo $rowExpectedResult   = $sheetData[$i]['10'];?></td>
+                                            <td><?php echo $rowTCWebStatus      = $sheetData[$i]['11'];?></td>
+                                            <td><?php echo $rowSeverity         = $sheetData[$i]['12'];?></td>
+                                            <td><?php echo $rowNotes            = $sheetData[$i]['13'];?></td>
+                                            <td><?php echo $rowTCWebCapture     = $sheetData[$i]['14'];?></td>
+                                        </tr>
+                                        <?php
+                                            endfor;
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

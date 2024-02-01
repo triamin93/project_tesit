@@ -113,39 +113,27 @@ $jumlah_projek = mysqli_num_rows($projek);
                             Dashboard
                         </a>
                         <!-- link admin -->
-                        <a class="nav-link" href="admin/index.php">
+                        <a class="nav-link" href="user/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
                         <!-- link Projek -->
-                        <a class="nav-link" href="project/index.php">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="project/index.php">Data Projek</a>
+                                <a class="nav-link" href="testscript/index.php">Data Test Script</a>
+                            </nav>
+                        </div>
                         <!-- link Audit Trail -->
                         <a class="nav-link" href="audit/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
                         </a>
-                        <!-- link Test Script -->
-                        <a class="nav-link" href="testscript/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
-                            Test Script
-                        </a>
-                        <!-- link Menu FCC -->
-                        <!-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
-                            FCC
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="bank_group/index.php">Bank Group</a>
-                                <a class="nav-link" href="bank_admin/index.php">Bank Admin</a>
-                                <a class="nav-link" href="client_admin/index.php">Client Admin</a>
-                            </nav>
-                        </div> -->
-                        <!-- Menampilkan nama project dari database di sidebar -->
                     </div>
                 </div>
             </nav>

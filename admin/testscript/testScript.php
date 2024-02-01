@@ -110,20 +110,22 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
-                        <!-- link projek -->
-                        <a class="nav-link" href="index.php">
+                        <!-- link Projek -->
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
                             Projek
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="../project/index.php">Data Projek</a>
+                                <a class="nav-link" href="index.php">Data Test Script</a>
+                            </nav>
+                        </div>
                         <!-- link Audit Trail -->
                         <a class="nav-link" href="../audit/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
-                        </a>
-                        <!-- link Test Script -->
-                        <a class="nav-link" href="index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
-                            Test Script
                         </a>
                     </div>
                 </div>
@@ -134,8 +136,7 @@
             <main>
                 <div class="container-fluid">
                     <!-- Header nama tampilan konten -->
-                    <h1 class="mt-4">Test Script</h1>
-
+                    <h1 class="mt-4">Rekaptulasi Test Script</h1>
                     <div class="card mb-4">
                         <div class="card-body">
                             <!-- Detail Data Projek -->
