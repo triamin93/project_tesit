@@ -1,4 +1,7 @@
 <?php
+    // Memanggil phpspreedsheet
+    require 'vendor/autoload.php';
+
     // Memanggil fungsi start session
     session_start();
 
@@ -6,13 +9,13 @@
     require 'functions.php';
 
     // Ambil data id di URL
-    $id_project = $_GET["id_project"];
+    $tmp_excel = $_GET["tmp_excel"];
 
     // Queary data project berdasarkan id
-    $project = mysqli_query($conn, "SELECT * FROM project WHERE id_project = $id_project");
-
+    $excel = mysqli_query($conn, "SELECT * FROM excel WHERE tmp_excel = '$tmp_excel'");
+    
     // mengambil data project
-    $row_project = mysqli_fetch_assoc($project);
+    $data_excel = mysqli_fetch_assoc($excel);
 
     // Fungsi untuk mengecek session user
     // jika tidak ada username yang masuk
@@ -51,7 +54,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Data Test Script</title>
+    <title>View Test Script</title>
     <style>
         table thead tr th {
             text-align: center;
@@ -144,25 +147,19 @@
                                     <tbody>
                                         <tr>
                                             <td><b>Nama Projek</b></td>
-                                            <td>: <?php echo $row_project['nama_project']?></td>
-                                            <td><b>Tanggal Terima</b></td>
-                                            <td>: <?php echo dateIndonesian($row_project['tanggal_diterima'])?></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Nama CR</b></td>
-                                            <td>: <?php echo $row_project['nama_cr']?></td>
-                                            <td><b>Tanggal Mulai</b></td>
-                                            <td>: <?php echo dateIndonesian($row_project['tanggal_mulai'])?></td>
+                                            <td>: <?php echo $data_excel['id_project']?></td>
+                                            <td><b>Nama Excel</b></td>
+                                            <td>: <?php echo $data_excel['nama_excel']?></td>
                                         </tr>
                                         <tr>
                                             <td><b>Nomor CR</b></td>
-                                            <td>: <?php echo $row_project['no_cr']?></td>
-                                            <td><b>Tanggal Selesai</b></td>
-                                            <td>: <?php echo dateIndonesian($row_project['tanggal_selesai'])?></td>
+                                            <td>: <?php echo $data_excel['id_project']?></td>
+                                            <td><b>Tanggal Upload</b></td>
+                                            <td>: <?php echo dateIndonesian($data_excel['tanggal_upload'])?></td>
                                         </tr>
                                         <tr>
                                             <td><b>PIC</b></td>
-                                            <td>: <?php echo $row_project['customer_pic']?></td>
+                                            <td>: <?php echo $data_excel['id_project']?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -200,15 +197,6 @@
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_excel']; ?></td>
                                                 <td><?= $data['tanggal_upload']; ?></td>
-                                                <td>
-                                                    <!-- Tombol untuk view data excel -->
-                                                    <a class="btn btn-primary" href="view.php?tmp_excel=<?=$data['tmp_excel']?>" role="button"><i class="fas fa-eye mr-1"></i>View</a>
-
-                                                    <!-- tombol untuk menghapus data project -->
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_test_script']; ?>">
-                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
-                                                    </button>
-                                                </td>
                                             </tr>
 
                                             <!-- Form Modal hapus -->
@@ -220,19 +208,6 @@
                                                             <h4 class="modal-title">Hapus Projek</h4>
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                         </div>
-                                                        <!-- Modal body -->
-                                                        <!-- Pesan untuk hapus projek -->
-                                                        <form method="POST">
-                                                            <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus Data Projek ?</p>
-                                                                <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
-                                                                <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
-                                                                <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
-                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
-                                                                <br>
-                                                                <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,37 +221,6 @@
                     </div>
                 </div>
             </main>
-        </div>
-    </div>
-
-    <!-- Form Modal upload -->
-    <div class="modal fade" id="upload">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Upload Test Script</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <!-- Modal body -->
-                <!-- Form untuk tambah data projek dengan upload -->
-                <form method="POST" action="" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="file">Upload File</label>
-                            <input type="file" class="form-control-file" id="file" name="file">
-                            <input type="hidden" name="id_project" value="<?php echo $row_project['id_project']; ?>">
-                        </div>
-                        <!-- Pakai Javascript -->
-                        <!-- <div class="custom-file mb-3">
-                            <input type="file" class="custom-file-input" id="upload_file">
-                            <label class="custom-file-label" for="upload_file">Choose file</label>
-                        </div> -->
-                        <br>
-                        <button type="submit" class="btn btn-success btn-lg btn-block" name="upload">Upload</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 

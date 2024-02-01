@@ -46,6 +46,9 @@ if (isset($_POST['hapus'])) {
 
 // Coding untuk upload file
 if(isset($_POST['upload'])){
+    // mengambil ID Project
+    $id_project = $_POST['id_project'];
+
     // isi file
     $namaFile = $_FILES['file']['name'];
     $ukuranFile = $_FILES['file']['size'];
@@ -58,7 +61,6 @@ if(isset($_POST['upload'])){
     }else{
         $ekstensi = pathinfo($namaFile)['extension'];
         $namaFileDepan = pathinfo($namaFile)['filename'];
-        
     }
 
     $ekstensiValid = ['xls', 'xlsx'];
@@ -78,10 +80,24 @@ if(isset($_POST['upload'])){
     $namaFileBaru .= $ekstensi;
     move_uploaded_file($tmpName, 'upload/' . $namaFileBaru);
 
+    // memasukan ke dalam database
+    $simpanFile = mysqli_query($conn, "INSERT INTO excel (id_project, nama_excel, tmp_excel, tanggal_upload) values('$id_project', '$namaFile', '$namaFileBaru', NOW())");
+
     // masukkan kodingan id project
-    echo "
+    if ($simpanFile > 0) {
+        echo "
         <script>
-            document.location.href = 'testScript.php?id_project='$id_project';
+            alert('Data Berhasil Ditambahkan!');
+            // document.location.href = 'testScript.php?id_project='$id_project';
+            document.location.href = 'index.php';
         </script>
         ";
+    } else {
+        echo "
+        <script>
+            alert('Data Gagal Ditambahkan!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    }
 }
