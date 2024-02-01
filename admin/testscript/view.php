@@ -176,44 +176,58 @@
                             <!-- Table Data projek -->
                             <div class="table-responsive">
                                 <table class="table table-bordered display nowrap" id="dataTable" width="100%" cellspacing="0" >
+                                    <?php 
+                                        // Ambil direktori excel
+                                        $inputFileName = 'upload/'. $tmp_excel;
+
+                                        // Create and Load Spreadsheet
+                                        $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);
+                                        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+                                        $spreadsheet = $reader->load($inputFileName);
+                                        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+                                    ?>
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Excel</th>
-                                            <th>Tanggal Upload</th>
-                                            <th>Aksi</th>
+                                            <th><?php echo $first = $sheetData['0']['0'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['1'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['2'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['3'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['4'];?></th>                                            <th><?php echo $first = $sheetData['0']['5'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['6'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['7'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['8'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['9'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['10'];?></th>                                            <th><?php echo $first = $sheetData['0']['11'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['12'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['13'];?></th>
+                                            <th><?php echo $first = $sheetData['0']['14'];?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            // mengambil query data admin
-                                            $project_testcase = mysqli_query($conn, "SELECT * FROM excel WHERE id_project = '$id_project'");
-                                            $i = 1;
-
-                                            // Pengulangan data admin
-                                            while ($data = mysqli_fetch_array($project_testcase)) :
-                                        ?>
+                                            for($i=1;$i<count($sheetData);$i++): ?>
                                             <tr>
-                                                <td><?= $i++; ?></td>
-                                                <td><?= $data['nama_excel']; ?></td>
-                                                <td><?= $data['tanggal_upload']; ?></td>
+                                                <td><?php echo $i;?></td>
+                                                <td><?php echo $first = $sheetData[$i]['0'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['1'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['2'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['3'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['4'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['5'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['6'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['7'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['8'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['9'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['10'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['11'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['12'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['13'];?></td>
+                                                <td><?php echo $first = $sheetData[$i]['14'];?></td>
                                             </tr>
-
-                                            <!-- Form Modal hapus -->
-                                            <div class="modal fade" id="delete<?php echo $data['id_test_script']; ?>">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Hapus Projek</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        endwhile;
-                                        ?>
+                                            <?php
+                                                endfor;
+                                            ?>
                                     </tbody>
                                 </table>
                             </div>
