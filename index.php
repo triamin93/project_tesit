@@ -40,13 +40,11 @@ if (isset($_POST["login"])) {
                 // Mengarahkan lokasi dashboard admin
                 header("location: admin/dashboard.php");
                 exit;
-
-
                 // cek login untuk pegawai
             } else if ($row["level"] == "operator") {
                 // membuat sessionnya pegawai
                 $_SESSION["username"] = $username;
-                $_SESSION["level"] = "admin";
+                $_SESSION["level"] = "operator";
 
                 // Mengambil ID User
                 $id_user = $row["id_user"];

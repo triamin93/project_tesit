@@ -20,7 +20,7 @@
     $level = $_SESSION["level"];
 
     // jika level bukan Admin
-    if ($level != "admin") {
+    if ($level != "operator") {
         echo "
             <script>
                 alert('Anda tidak punya akses pada halaman Admin');
@@ -89,11 +89,6 @@
                         <a class="nav-link" href="../dashboard.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
-                        </a>
-                        <!-- link user -->
-                        <a class="nav-link" href="../user/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
-                            User
                         </a>
                         <!-- link Projek -->
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">

@@ -5,6 +5,8 @@
     // memanggil fungsi program
     require 'functions.php';
 
+    $username = $_SESSION["username"];
+
     // Fungsi untuk mengecek session user
     // jika tidak ada username yang masuk
     if (!isset($_SESSION["username"])) {
@@ -20,7 +22,7 @@
     $level = $_SESSION["level"];
 
     // jika level bukan Admin
-    if ($level != "admin") {
+    if ($level != "operator") {
         echo "
             <script>
                 alert('Anda tidak punya akses pada halaman Admin');
@@ -40,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Audit Login</title>
+    <title>Rekapitulasi Projek</title>
     <style>
         table thead tr th {
             text-align: center;
@@ -91,7 +93,7 @@
                             Dashboard
                         </a>
                         <!-- link user -->
-                        <a class="nav-link" href="../user/index.php">
+                        <a class="nav-link" href="../admin/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
@@ -104,11 +106,11 @@
                         <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="../project/index.php">Data Projek</a>
-                                <a class="nav-link" href="../testscript/index.php">Data Test Script</a>
+                                <a class="nav-link" href="index.php">Data Test Script</a>
                             </nav>
                         </div>
                         <!-- link Audit Trail -->
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../audit/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
                         </a>
@@ -121,8 +123,11 @@
             <main>
                 <div class="container-fluid">
                     <!-- Header nama tampilan konten -->
-                    <h1 class="mt-4">Audit Trail</h1>
+                    <h1 class="mt-4">Test Script</h1>
                     <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Rekaptulasi Projek</h4>
+                        </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
@@ -130,25 +135,43 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>User</th>
-                                            <th>Status</th>
-                                            <th>Waktu</th>
+                                            <th>Nama Projek</th>
+                                            <th>Nama CR</th>
+                                            <th>Nomor CR</th>
+                                            <th>PIC</th>
+                                            <th>Tanggal Diterima</th>
+                                            <th>Tanggal Mulai</th>
+                                            <th>Tanggal Selesai</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             // mengambil query data admin
-                                            $audit = mysqli_query($conn, "SELECT user.username, audit_login.status, audit_login.time FROM audit_login JOIN user ON audit_login.id_user = user.id_user");
+                                            $project = mysqli_query($conn, "SELECT project.id_project, project.nama_project, project.nama_cr,project.no_cr, project.customer_pic, project.tanggal_diterima, project.tanggal_mulai, project.tanggal_selesai FROM project JOIN akses ON project.id_project = akses.id_project JOIN user ON akses.id_user = user.id_user WHERE user.username = '$username'");
                                             $i = 1;
 
                                             // Pengulangan data admin
-                                            while ($data = mysqli_fetch_array($audit)) :
+                                            while ($data = mysqli_fetch_array($project)) :
+                                        ?>
+
+                                        <!-- mengambil data id project -->
+                                        <?php 
+                                            $id_project = $data['id_project'];
                                         ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $data['username']; ?></td>
-                                                <td><?= $data['status']; ?></td>
-                                                <td><?= dateIndonesian($data['time']) . " " . date_format(date_create($data['time']), "H:i:s"); ?></td>
+                                                <td><?= $data['nama_project']; ?></td>
+                                                <td><?= $data['nama_cr']; ?></td>
+                                                <td><?= $data['no_cr']; ?></td>
+                                                <td><?= $data['customer_pic']; ?></td>
+                                                <td><?= $data['tanggal_diterima']; ?></td>
+                                                <td><?= $data['tanggal_mulai']; ?></td>
+                                                <td><?= $data['tanggal_selesai']; ?></td>
+                                                <!-- Menampilkan tombol aksi -->
+                                                <td>
+                                                    <a href="testScript.php?id_project=<?=$data['id_project']?>" class="btn btn-info" role="button"><i class="fas fa-info-circle mr-1"></i>Test Script</a>
+                                                </td>
                                             </tr>
                                         <?php
                                         endwhile;
@@ -211,25 +234,25 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Indonesian.json'
                 },
-                dom: 'Bfrtip',
-                // Tombol di Datatabel
-                buttons: [
-                    {
-                        extend: 'excelHtml5',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'collection',
-                        className: 'custom-html-collection',
-                        buttons: [
-                            '<h6 class="not-top-heading">Column Visibility</h6>',
-                            'columnsToggle'
-                        ]
-                    },
-                    'pageLength'
-                ]
+                // dom: 'Bfrtip',
+                // // Tombol di Datatabel
+                // buttons: [
+                //     {
+                //         extend: 'excelHtml5',
+                //         exportOptions: {
+                //             columns: ':visible'
+                //         }
+                //     },
+                //     {
+                //         extend: 'collection',
+                //         className: 'custom-html-collection',
+                //         buttons: [
+                //             '<h6 class="not-top-heading">Column Visibility</h6>',
+                //             'columnsToggle'
+                //         ]
+                //     },
+                //     'pageLength'
+                // ]
             });
         });
     </script>

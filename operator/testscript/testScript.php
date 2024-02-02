@@ -5,6 +5,15 @@
     // memanggil fungsi program
     require 'functions.php';
 
+    // Ambil data id di URL
+    $id_project = $_GET["id_project"];
+
+    // Queary data project berdasarkan id
+    $project = mysqli_query($conn, "SELECT * FROM project WHERE id_project = $id_project");
+
+    // mengambil data project
+    $row_project = mysqli_fetch_assoc($project);
+
     // Fungsi untuk mengecek session user
     // jika tidak ada username yang masuk
     if (!isset($_SESSION["username"])) {
@@ -20,7 +29,7 @@
     $level = $_SESSION["level"];
 
     // jika level bukan Admin
-    if ($level != "admin") {
+    if ($level != "operator") {
         echo "
             <script>
                 alert('Anda tidak punya akses pada halaman Admin');
@@ -29,6 +38,8 @@
             ";
         exit;
     }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -40,11 +51,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Audit Login</title>
+    <title>Data Test Script</title>
     <style>
         table thead tr th {
             text-align: center;
         }
+
+        div.dataTables_wrapper {
+        margin: 0 auto;
+    }
     </style>
 
     <!-- Memanggil CSS -->
@@ -91,7 +106,7 @@
                             Dashboard
                         </a>
                         <!-- link user -->
-                        <a class="nav-link" href="../user/index.php">
+                        <a class="nav-link" href="../admin/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
@@ -104,11 +119,11 @@
                         <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="../project/index.php">Data Projek</a>
-                                <a class="nav-link" href="../testscript/index.php">Data Test Script</a>
+                                <a class="nav-link" href="index.php">Data Test Script</a>
                             </nav>
                         </div>
                         <!-- link Audit Trail -->
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="../audit/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Audit Trail
                         </a>
@@ -121,37 +136,73 @@
             <main>
                 <div class="container-fluid">
                     <!-- Header nama tampilan konten -->
-                    <h1 class="mt-4">Audit Trail</h1>
+                    <h1 class="mt-4">Rekaptulasi Test Script</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <!-- Detail Data Projek -->
+                            <div class="table-responsive">
+                                <table width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Nama Projek</b></td>
+                                            <td>: <?php echo $row_project['nama_project']?></td>
+                                            <td><b>Tanggal Terima</b></td>
+                                            <td>: <?php echo dateIndonesian($row_project['tanggal_diterima'])?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Nama CR</b></td>
+                                            <td>: <?php echo $row_project['nama_cr']?></td>
+                                            <td><b>Tanggal Mulai</b></td>
+                                            <td>: <?php echo dateIndonesian($row_project['tanggal_mulai'])?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Nomor CR</b></td>
+                                            <td>: <?php echo $row_project['no_cr']?></td>
+                                            <td><b>Tanggal Selesai</b></td>
+                                            <td>: <?php echo dateIndonesian($row_project['tanggal_selesai'])?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>PIC</b></td>
+                                            <td>: <?php echo $row_project['customer_pic']?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card mb-4">
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered display nowrap" id="dataTable" width="100%" cellspacing="0" >
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>User</th>
-                                            <th>Status</th>
-                                            <th>Waktu</th>
+                                            <th>Nama Excel</th>
+                                            <th>Tanggal Upload</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             // mengambil query data admin
-                                            $audit = mysqli_query($conn, "SELECT user.username, audit_login.status, audit_login.time FROM audit_login JOIN user ON audit_login.id_user = user.id_user");
+                                            $project_testcase = mysqli_query($conn, "SELECT * FROM excel WHERE id_project = '$id_project'");
                                             $i = 1;
 
                                             // Pengulangan data admin
-                                            while ($data = mysqli_fetch_array($audit)) :
+                                            while ($data = mysqli_fetch_array($project_testcase)) :
                                         ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $data['username']; ?></td>
-                                                <td><?= $data['status']; ?></td>
-                                                <td><?= dateIndonesian($data['time']) . " " . date_format(date_create($data['time']), "H:i:s"); ?></td>
+                                                <td><?= $data['nama_excel']; ?></td>
+                                                <td><?= $data['tanggal_upload']; ?></td>
+                                                <td>
+                                                    <!-- Tombol untuk view data excel -->
+                                                    <a class="btn btn-primary" href="view.php?tmp_excel=<?=$data['tmp_excel']?>" role="button"><i class="fas fa-eye mr-1"></i>View</a>
+                                                </td>
                                             </tr>
                                         <?php
-                                        endwhile;
+                                            endwhile;
                                         ?>
                                     </tbody>
                                 </table>
@@ -160,6 +211,37 @@
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- Form Modal upload -->
+    <div class="modal fade" id="upload">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Test Script</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <!-- Form untuk tambah data projek dengan upload -->
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="file">Upload File</label>
+                            <input type="file" class="form-control-file" id="file" name="file">
+                            <input type="hidden" name="id_project" value="<?php echo $row_project['id_project']; ?>">
+                        </div>
+                        <!-- Pakai Javascript -->
+                        <!-- <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="upload_file">
+                            <label class="custom-file-label" for="upload_file">Choose file</label>
+                        </div> -->
+                        <br>
+                        <button type="submit" class="btn btn-success btn-lg btn-block" name="upload">Upload</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -175,7 +257,7 @@
     <!-- Library Chart JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 
-    <!-- Library Datatable -->
+    <!-- Library Datatable --> 
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -229,7 +311,8 @@
                         ]
                     },
                     'pageLength'
-                ]
+                ],
+                scrollX: true
             });
         });
     </script>

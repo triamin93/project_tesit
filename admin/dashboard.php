@@ -38,9 +38,12 @@ $jumlah_user = mysqli_num_rows($user);
 $projek = mysqli_query($conn, "SELECT * FROM project");
 $jumlah_projek = mysqli_num_rows($projek);
 
-// Mengambil Data Projek yang Sudah Selesai
+// Mengambil Data Banyaknya Test Script yang Tersedia
+$testScript = mysqli_query($conn, "SELECT * FROM excel");
+$jumlah_testScript = mysqli_num_rows($testScript);
 
-// Mengambil Data Projek yang Belum Selesai
+// Mengambil Data Projek yang Proses
+
 ?>
 
 <!DOCTYPE html>
@@ -175,8 +178,8 @@ $jumlah_projek = mysqli_num_rows($projek);
                                     <div class="card-body-icon">
                                         <i class="fas fa-check-circle"></i>
                                     </div>
-                                    <div class="card-title">SELESAI</div>
-                                    <div class="display-4">12</div>
+                                    <div class="card-title">TEST SCRIPT</div>
+                                    <div class="display-4"><?php echo $jumlah_testScript; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -197,7 +200,7 @@ $jumlah_projek = mysqli_num_rows($projek);
                     <div class="card mb-4">
                         <div class="card-header bg-info">
                             <i class="fas fa-table mr-1"></i>
-                            <b>Projek yang Tersedia</b>
+                            <b>Test Script yang Tersedia</b>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -207,12 +210,14 @@ $jumlah_projek = mysqli_num_rows($projek);
                                             <th>No</th>
                                             <th>Projek</th>
                                             <th>No CR</th>
+                                            <th>PIC</th>
+                                            <th>Nama File</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         // Query mengambil data barang dengan stok kurang dari 5
-                                        $projek = mysqli_query($conn, "SELECT * FROM project ORDER BY id_project ASC");
+                                        $projek = mysqli_query($conn, "SELECT excel.nama_excel, project.nama_project, project.no_cr, project.customer_pic FROM excel JOIN project ON excel.id_project = project.id_project ORDER BY excel.id_excel DESC");
                                         $i = 1;
                                         // pengulangan menampilkan data
                                         while ($data = mysqli_fetch_array($projek)) :
@@ -221,6 +226,8 @@ $jumlah_projek = mysqli_num_rows($projek);
                                                 <td><?= $i++; ?></td>
                                                 <td><?= $data['nama_project']; ?></td>
                                                 <td><?= $data['no_cr']; ?></td>
+                                                <td><?= $data['customer_pic']; ?></td>
+                                                <td><?= $data['nama_excel']; ?></td>
                                             </tr>
                                         <?php
                                         endwhile;

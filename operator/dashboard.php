@@ -4,6 +4,8 @@ session_start();
 // koneksi ke database
 $conn = mysqli_connect("localhost", "root", "", "testscript");
 
+$username = $_SESSION["username"];
+
 // jika tidak ada username yang masuk
 if (!isset($_SESSION["username"])) {
     echo "
@@ -15,10 +17,12 @@ if (!isset($_SESSION["username"])) {
     exit;
 }
 
+echo $username;
+
 $level = $_SESSION["level"];
 
 // // jika level bukan pegawai
-if ($level != "admin") {
+if ($level != "operator") {
     echo "
         <script>
             alert('Anda tidak punya akses pada halaman Admin');
@@ -29,17 +33,15 @@ if ($level != "admin") {
 }
 
 // JUMLAH DATA
-// ambil data barang
-// $barang = mysqli_query($conn, "SELECT * FROM barang");
-// $jumlah_barang = mysqli_num_rows($barang);
+// Mengambil Data Projek pada user operator
+$projek = mysqli_query($conn, "SELECT akses.id_project, akses.id_user, user.username FROM akses JOIN user ON akses.id_user = user.id_user
+WHERE user.username = '$username'");
+$jumlah_projek = mysqli_num_rows($projek);
 
-// // ambil data barang masuk
-// $barangmasuk = mysqli_query($conn, "SELECT * FROM barangmasuk");
-// $jumlah_barangmasuk = mysqli_num_rows($barangmasuk);
+// Mengambil Data Banyaknya Test Script
+$testScript = mysqli_query($conn, "SELECT excel.nama_excel FROM excel JOIN project ON excel.id_project = project.id_project JOIN akses ON	 project.id_project = akses.id_project JOIN user ON akses.id_user = user.id_user WHERE user.username = '$username'");
+$jumlah_testScript = mysqli_num_rows($testScript);
 
-// // ambil data barang keluar
-// $barangkeluar = mysqli_query($conn, "SELECT * FROM barangkeluar");
-// $jumlah_barangkeluar = mysqli_num_rows($barangkeluar);
 
 ?>
 
@@ -106,28 +108,22 @@ if ($level != "admin") {
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <!-- link barang -->
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsBarang" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-boxes"></i></div>
-                            Barang
+                        <!-- link Projek -->
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayoutsFCC" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
+                            Projek
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayoutsBarang" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayoutsFCC" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="barang/index.php">Data Barang</a>
-                                <a class="nav-link" href="barang_masuk/index.php">Barang Masuk</a>
-                                <a class="nav-link" href="barang_keluar/index.php">Barang Keluar</a>
+                                <a class="nav-link" href="project/index.php">Data Projek</a>
+                                <a class="nav-link" href="testscript/index.php">Data Test Script</a>
                             </nav>
                         </div>
-                        <!-- link Supplier -->
-                        <a class="nav-link" href="supplier/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-people-carry"></i></div>
-                            Supplier
-                        </a>
-                        <!-- link Customer -->
-                        <a class="nav-link" href="customer/index.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-dolly-flatbed"></i></div>
-                            Customer
+                        <!-- link Audit Trail -->
+                        <a class="nav-link" href="audit/index.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
+                            Audit Trail
                         </a>
                     </div>
                 </div>
@@ -145,10 +141,10 @@ if ($level != "admin") {
                             <div class="card bg-warning text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-boxes"></i>
+                                        <i class="fas fa-tasks"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barang; ?></div> -->
+                                    <div class="card-title">Project</div>
+                                    <div class="display-4"><?php echo $jumlah_projek; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -158,10 +154,10 @@ if ($level != "admin") {
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-sign-in-alt"></i>
+                                        <i class="fas fa-check-circle"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barangmasuk; ?></div> -->
+                                    <div class="card-title">Test Script</div>
+                                    <div class="display-4"><?php echo $jumlah_testScript; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -171,10 +167,10 @@ if ($level != "admin") {
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body dashboard">
                                     <div class="card-body-icon">
-                                        <i class="fas fa-sign-out-alt"></i>
+                                        <i class="fas fa-clock"></i>
                                     </div>
-                                    <div class="card-title">XXX</div>
-                                    <!-- <div class="display-4"><?php echo $jumlah_barangkeluar; ?></div> -->
+                                    <div class="card-title">Proses</div>
+                                    <div class="display-4">22</div>
                                 </div>
                             </div>
                         </div>
@@ -191,16 +187,28 @@ if ($level != "admin") {
                                         <tr>
                                             <th>No</th>
                                             <th>Projek</th>
-                                            <th>Menu</th>
+                                            <th>No CR</th>
+                                            <th>Test Script</th>
                                         </tr>
                                     </thead>
-                                    <!-- <tbody>
+                                    <tbody>
+                                    <?php
+                                        // Query mengambil data barang dengan stok kurang dari 5
+                                        $testScriptUser = mysqli_query($conn, "SELECT excel.nama_excel, project.nama_project, project.no_cr FROM excel JOIN project ON excel.id_project = project.id_project JOIN akses ON project.id_project = akses.id_project JOIN user ON akses.id_user = user.id_user WHERE user.username = '$username' ORDER BY excel.id_excel DESC");
+                                        $i = 1;
+                                        // pengulangan menampilkan data
+                                        while ($data = mysqli_fetch_array($testScriptUser)) :
+                                        ?>
                                             <tr>
                                                 <td><?= $i++; ?></td>
-                                                <td><?= $data['nama_barang']; ?></td>
-                                                <td><?= $data['stok']; ?></td>
+                                                <td><?= $data['nama_project']; ?></td>
+                                                <td><?= $data['no_cr']; ?></td>
+                                                <td><?= $data['nama_excel']; ?></td>
                                             </tr>
-                                    </tbody> -->
+                                    <?php
+                                        endwhile;
+                                    ?>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
