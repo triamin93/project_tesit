@@ -175,7 +175,7 @@
                                 <table class="table table-bordered display nowrap" id="dataTable" width="100%" cellspacing="0" >
                                     <?php 
                                         // Ambil direktori excel
-                                        $inputFileName = 'upload/'. $tmp_excel;
+                                        $inputFileName = '../../upload/'. $tmp_excel;
 
                                         // Create and Load Spreadsheet
                                         $inputFileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($inputFileName);

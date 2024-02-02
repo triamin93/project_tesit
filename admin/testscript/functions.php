@@ -78,7 +78,7 @@ if(isset($_POST['upload'])){
     $namaFileBaru = uniqid();
     $namaFileBaru .= '.';
     $namaFileBaru .= $ekstensi;
-    move_uploaded_file($tmpName, 'upload/' . $namaFileBaru);
+    move_uploaded_file($tmpName, '../../upload/' . $namaFileBaru);
 
     // memasukan ke dalam database
     $simpanFile = mysqli_query($conn, "INSERT INTO excel (id_project, nama_excel, tmp_excel, tanggal_upload) values('$id_project', '$namaFile', '$namaFileBaru', NOW())");
