@@ -12,7 +12,7 @@
  * @param mixed $config Configuration to use, can be any value accepted by
  *        HTMLPurifier_Config::create()
  * @return string
- */
+ */ 
 function HTMLPurifier($html, $config = null)
 {
     static $purifier = false;
