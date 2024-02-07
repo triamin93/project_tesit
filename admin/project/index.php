@@ -254,6 +254,7 @@
                                                                 <div class="form-group">
                                                                     <label for="nama_projek">Nama Projek</label>
                                                                     <input type="text" name="nama_projek" placeholder="Masukkan Nama Projek" class="form-control" id="nama_projek" value="<?= $data['nama_project']; ?>" required>
+                                                                </div>
                                                                 <div class="form-group">
                                                                     <label for="nama_cr">Nama CR</label>
                                                                     <input type="text" name="nama_cr" placeholder="Masukkan Nanam CR" class="form-control" id="nama_cr" value="<?= $data['nama_cr']; ?>" required>

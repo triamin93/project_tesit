@@ -2,6 +2,11 @@
 // Memanggil phpspreedsheet
 require 'vendor/autoload.php';
 
+// Load phpspreadsheet class using namespaces
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// Call phpspreadsheet IOfactory
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 // koneksi ke database
 $conn = mysqli_connect("localhost", "root", "", "testscript");
 
@@ -17,31 +22,6 @@ function dateIndonesian($date)
     $tahun = date('Y', $date); 
     $formatTanggal = $hari . ", " . $tanggal . " " . $bulan . " " . $tahun;
     return $formatTanggal;
-}
-
-//Coding untuk hapus data project
-if (isset($_POST['hapus'])) {
-    $id_project = $_POST['id_project'];
-
-    // query untuk hapus data project
-    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
-    $hapus_akses = mysqli_query($conn, "DELETE FROM akses WHERE id_project = '$id_project'");
-
-    if ($hapus_project&&$hapus_akses) {
-        echo "
-        <script>
-            alert('Data Berhasil Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    } else {
-        echo "
-        <script>
-            alert('Data Gagal Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    }
 }
 
 // Coding untuk upload file
@@ -101,3 +81,66 @@ if(isset($_POST['upload'])){
         ";
     }
 }
+
+// Coding untuk mengedit data row excel
+if(isset($_POST['edit'])){
+    // Mengambil nilai post yang hidden
+    $cellRow = $_POST['cellRow'];
+    $tmp_excel = $_POST['tmp'];
+
+    // Mengambil nilai post yang di input
+    $testDate = $_POST['testDate'];
+    $pic = $_POST['pic'];
+    $module = $_POST['module'];
+
+    $cellRow++;
+
+    // Ambil direktori excel
+    $inputFileName = '../../upload/'. $tmp_excel;
+
+    // Create and Load Spreadsheet
+    $inputFileType = IOFactory::identify($inputFileName);
+    $reader = IOFactory::createReader($inputFileType);
+    $spreadsheet = $reader->load($inputFileName);
+    $sheetData = $spreadsheet->getActiveSheet(); 
+
+    // Set value
+    $sheetData->setCellValue([1, $cellRow], $testDate);
+    $sheetData->setCellValue([2, $cellRow], $pic);
+    $sheetData->setCellValue([4, $cellRow], $module);
+
+    // Write Excel
+    $writer = IOFactory::createWriter($spreadsheet, $inputFileType);
+    // save into php output
+    $writer->save($inputFileName);
+    
+    echo "<script>
+    alert('Data Berhasil Dihapus');
+    </script>";
+}
+
+//Coding untuk hapus data project
+if (isset($_POST['hapus'])) {
+    $id_project = $_POST['id_project'];
+
+    // query untuk hapus data project
+    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
+    $hapus_akses = mysqli_query($conn, "DELETE FROM akses WHERE id_project = '$id_project'");
+
+    if ($hapus_project&&$hapus_akses) {
+        echo "
+        <script>
+            alert('Data Berhasil Dihapus!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            alert('Data Gagal Dihapus!');
+            document.location.href = 'index.php';
+        </script>
+        ";
+    }
+}
+

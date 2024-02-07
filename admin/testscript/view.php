@@ -12,10 +12,13 @@
     $tmp_excel = $_GET["tmp_excel"];
 
     // Queary data project berdasarkan id
-    $excel = mysqli_query($conn, "SELECT excel.nama_excel, excel.tmp_excel, excel.tanggal_upload, project.nama_project, project.no_cr, project.customer_pic FROM excel JOIN project ON excel.id_project = project.id_project WHERE excel.tmp_excel = '$tmp_excel'");
+    $excel = mysqli_query($conn, "SELECT excel.nama_excel, excel.tmp_excel, excel.tanggal_upload, project.id_project, project.nama_project, project.no_cr, project.customer_pic FROM excel JOIN project ON excel.id_project = project.id_project WHERE excel.tmp_excel = '$tmp_excel'");
     
     // mengambil data project
     $data_excel = mysqli_fetch_assoc($excel);
+
+    // mengambil id project
+    $id_project = $data_excel['id_project'];
 
     // Fungsi untuk mengecek session user
     // jika tidak ada username yang masuk
@@ -182,48 +185,170 @@
                                         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
                                         $spreadsheet = $reader->load($inputFileName);
                                         $sheetData = $spreadsheet->getActiveSheet()->toArray();
+
+                                        // Ambil head dalam table
+                                        $headTestDate       = $sheetData['0']['0'];
+                                        $headPIC            = $sheetData['0']['1'];
+                                        $headTestCaseID     = $sheetData['0']['2'];
+                                        $headModul          = $sheetData['0']['3'];
+                                        $headFeature        = $sheetData['0']['4'];
+                                        $headTestCase       = $sheetData['0']['5'];
+                                        $headTestType       = $sheetData['0']['6'];
+                                        $headPrecondition   = $sheetData['0']['7'];
+                                        $headTestStep       = $sheetData['0']['8'];
+                                        $headTestData       = $sheetData['0']['9'];
+                                        $headExpectedResult = $sheetData['0']['10'];
+                                        $headTCWebStatus    = $sheetData['0']['11'];
+                                        $headSeverity       = $sheetData['0']['12'];
+                                        $headNotes          = $sheetData['0']['13'];
+                                        $headTCWebCapture   = $sheetData['0']['14'];
                                     ?>
+                                    <!-- Menampilkan isi Header -->
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th><?php echo $headTestDate        = $sheetData['0']['0'];?></th>
-                                            <th><?php echo $headPIC             = $sheetData['0']['1'];?></th>
-                                            <th><?php echo $headTestCaseID      = $sheetData['0']['2'];?></th>
-                                            <th><?php echo $headModul           = $sheetData['0']['3'];?></th>
-                                            <th><?php echo $headFeature         = $sheetData['0']['4'];?></th>    
-                                            <th><?php echo $headTestCase        = $sheetData['0']['5'];?></th>
-                                            <th><?php echo $headTestType        = $sheetData['0']['6'];?></th>
-                                            <th><?php echo $headPrecondition    = $sheetData['0']['7'];?></th>
-                                            <th><?php echo $headTestStep        = $sheetData['0']['8'];?></th>
-                                            <th><?php echo $headTestData        = $sheetData['0']['9'];?></th>
-                                            <th><?php echo $headExpectedResult  = $sheetData['0']['10'];?></th>
-                                            <th><?php echo $headTCWebStatus     = $sheetData['0']['11'];?></th>
-                                            <th><?php echo $headSeverity        = $sheetData['0']['12'];?></th>
-                                            <th><?php echo $headNotes           = $sheetData['0']['13'];?></th>
-                                            <th><?php echo $headTCWebCapture    = $sheetData['0']['14'];?></th>
+                                            <th><?= $headTestDate;?></th>
+                                            <th><?= $headPIC;?></th>
+                                            <th><?= $headTestCaseID;?></th>
+                                            <th><?= $headModul;?></th>
+                                            <th><?= $headFeature;?></th>    
+                                            <th><?= $headTestCase;?></th>
+                                            <th><?= $headTestType;?></th>
+                                            <th><?= $headPrecondition;?></th>
+                                            <th><?= $headTestStep;?></th>
+                                            <th><?= $headTestData;?></th>
+                                            <th><?= $headExpectedResult;?></th>
+                                            <th><?= $headTCWebStatus;?></th>
+                                            <th><?= $headSeverity;?></th>
+                                            <th><?= $headNotes;?></th>
+                                            <th><?= $headTCWebCapture;?></th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            for($i=1;$i<count($sheetData);$i++): ?>
+                                            for($i=1;$i<count($sheetData);$i++): 
+                                            // Mengambil nilai row di excel 
+                                            $rowTestDate         = $sheetData[$i]['0'];
+                                            $rowPIC              = $sheetData[$i]['1'];
+                                            $rowTestCaseID       = $sheetData[$i]['2'];
+                                            $rowModul            = $sheetData[$i]['3'];
+                                            $rowFeature          = $sheetData[$i]['4'];
+                                            $rowTestCase         = $sheetData[$i]['5'];
+                                            $rowTestType         = $sheetData[$i]['6'];
+                                            $rowPrecondition     = $sheetData[$i]['7'];
+                                            $rowTestStep         = $sheetData[$i]['8'];
+                                            $rowTestData         = $sheetData[$i]['9'];
+                                            $rowExpectedResult   = $sheetData[$i]['10'];
+                                            $rowTCWebStatus      = $sheetData[$i]['11'];
+                                            $rowSeverity         = $sheetData[$i]['12'];
+                                            $rowNotes            = $sheetData[$i]['13'];
+                                            $rowTCWebCapture     = $sheetData[$i]['14'];
+                                        ?>
                                         <tr>
-                                            <td><?php echo $i;?></td>
-                                            <td><?php echo $rowTestDate         = $sheetData[$i]['0'];?></td>
-                                            <td><?php echo $rowPIC              = $sheetData[$i]['1'];?></td>
-                                            <td><?php echo $rowTestCaseID       = $sheetData[$i]['2'];?></td>
-                                            <td><?php echo $rowModul            = $sheetData[$i]['3'];?></td>
-                                            <td><?php echo $rowFeature          = $sheetData[$i]['4'];?></td>
-                                            <td><?php echo $rowTestCase         = $sheetData[$i]['5'];?></td>
-                                            <td><?php echo $rowTestType         = $sheetData[$i]['6'];?></td>
-                                            <td><?php echo $rowPrecondition     = $sheetData[$i]['7'];?></td>
-                                            <td><?php echo $rowTestStep         = $sheetData[$i]['8'];?></td>
-                                            <td><?php echo $rowTestData         = $sheetData[$i]['9'];?></td>
-                                            <td><?php echo $rowExpectedResult   = $sheetData[$i]['10'];?></td>
-                                            <td><?php echo $rowTCWebStatus      = $sheetData[$i]['11'];?></td>
-                                            <td><?php echo $rowSeverity         = $sheetData[$i]['12'];?></td>
-                                            <td><?php echo $rowNotes            = $sheetData[$i]['13'];?></td>
-                                            <td><?php echo $rowTCWebCapture     = $sheetData[$i]['14'];?></td>
+                                            <td><?= $i;?></td>
+                                            <td><?= $rowTestDate;?></td>
+                                            <td><?= $rowPIC;?></td>
+                                            <td><?= $rowTestCaseID;?></td>
+                                            <td><?= $rowModul;?></td>
+                                            <td><?= $rowFeature;?></td>
+                                            <td><?= $rowTestCase;?></td>
+                                            <td><?= $rowTestType;?></td>
+                                            <td><?= $rowPrecondition;?></td>
+                                            <td><?= $rowTestStep;?></td>
+                                            <td><?= $rowTestData;?></td>
+                                            <td><?= $rowExpectedResult;?></td>
+                                            <td><?= $rowTCWebStatus;?></td>
+                                            <td><?= $rowSeverity;?></td>
+                                            <td><?= $rowNotes;?></td>
+                                            <td><?= $rowTCWebCapture;?></td>
+                                            <td>
+                                                <!-- Tombol untuk edit data isi excel -->
+                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$i; ?>">
+                                                        <i class="fas fa-edit mr-1"></i>Ubah
+                                                    </button>
+
+                                                    <!-- tombol untuk hapus data isi excel -->
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_project']; ?>">
+                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
+                                                    </button>
+                                            </td>
                                         </tr>
+
+                                        <!-- Form Modal hapus -->
+                                        <div class="modal fade" id="delete<?php echo $data['id_project']; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Hapus Projek</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                        <!-- Modal body -->
+                                                        <!-- Pesan untuk hapus projek -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+                                                            <p>Apakah Anda Yakin Menghapus Data Projek ?</p>
+                                                            <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
+                                                            <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
+                                                            <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
+                                                            <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
+                                                            <br>
+                                                            <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Form Modal edit -->
+                                        <div class="modal fade" id="edit<?=$i; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Test Script</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <!-- Modal body -->
+                                                    <!-- Form untuk edit data test script -->
+                                                    <form method="POST">
+                                                        <div class="modal-body">
+                                                            <input type="text" name="cellRow" value="<?=$i; ?>">
+                                                            <input type="text" name="tmp" value="<?=$tmp_excel; ?>">
+
+                                                            <div class="form-group">
+                                                                <label for="testDate">Test Date</label>
+                                                                <input type="date" name="testDate" placeholder="Masukkan Module" class="form-control" id="testDate" value="<?= $rowTestDate; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="pic">PIC</label>
+                                                                <br>
+                                                                <select class="form-control" id="pic" name="pic">
+                                                                    <?php
+                                                                    // Query untuk menampilkan nama user
+                                                                        $user = mysqli_query($conn, "SELECT nama_lengkap FROM user JOIN akses ON user.id_user = akses.id_user JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project' ORDER BY nama_lengkap ASC;");
+                                                                        // Pengulangan untuk menampilkan data user
+                                                                        while ($data = mysqli_fetch_array($user)) :
+                                                                    ?>
+                                                                            <option value="<?php echo $data['nama_lengkap']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                                                    <?php
+                                                                        endwhile;
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="module">Module</label>
+                                                                <input type="text" name="module" placeholder="Masukkan Module" class="form-control" id="module" value="<?= $rowModul; ?>" required>
+                                                            </div>
+
+                                                            <br>
+                                                            <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
+                                                        </div>
+                                                    </form> 
+                                                </div>
+                                            </div>
+                                        </div>    
                                         <?php
                                             endfor;
                                         ?>
