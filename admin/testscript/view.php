@@ -185,6 +185,7 @@
                                         $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
                                         $spreadsheet = $reader->load($inputFileName);
                                         $sheetData = $spreadsheet->getActiveSheet()->toArray();
+                                        // echo count($sheetData);
 
                                         // Ambil head dalam table
                                         $headTestDate       = $sheetData['0']['0'];
@@ -314,12 +315,12 @@
                                                     <!-- Form untuk edit data test script -->
                                                     <form method="POST">
                                                         <div class="modal-body">
-                                                            <input type="text" name="cellRow" value="<?=$i; ?>">
-                                                            <input type="text" name="tmp" value="<?=$tmp_excel; ?>">
+                                                            <input type="hidden" name="cellRow" value="<?=$i; ?>">
+                                                            <input type="hidden" name="tmp" value="<?=$tmp_excel; ?>">
 
                                                             <div class="form-group">
                                                                 <label for="testDate">Test Date</label>
-                                                                <input type="date" name="testDate" placeholder="Masukkan Module" class="form-control" id="testDate" value="<?= $rowTestDate; ?>" required>
+                                                                <input type="date" name="testDate" class="form-control" id="testDate" value="<?= $rowTestDate; ?>" required>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="pic">PIC</label>
@@ -338,10 +339,57 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label for="testCaseID">Test Case ID</label>
+                                                                <input type="text" name="testCaseID" class="form-control" id="testCaseID" value="<?= $rowTestCaseID; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="module">Module</label>
                                                                 <input type="text" name="module" placeholder="Masukkan Module" class="form-control" id="module" value="<?= $rowModul; ?>" required>
                                                             </div>
-
+                                                            <div class="form-group">
+                                                                <label for="feature">Feature</label>
+                                                                <input type="text" name="feature" placeholder="Masukkan Feature" class="form-control" id="feature" value="<?= $rowFeature; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="testCase">Test Case</label>
+                                                                <input type="text" name="testCase" placeholder="Masukkan Test Case" class="form-control" id="testCase" value="<?= $rowTestCase; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="testType">Test Type</label>
+                                                                <input type="text" name="testType" placeholder="Masukkan Test Type" class="form-control" id="testType" value="<?= $rowTestType; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="preCondition">Pre Condition</label>
+                                                                <input type="text" name="preCondition" placeholder="Masukkan Pre Condition" class="form-control" id="preCondition" value="<?= $rowPrecondition; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="testStep">Test Step</label>
+                                                                <input type="text" name="testStep" placeholder="Masukkan Test Step" class="form-control" id="testStep" value="<?= $rowTestStep; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="testData">Test Data</label>
+                                                                <input type="text" name="testData" placeholder="Masukkan Test Data" class="form-control" id="testData" value="<?= $rowTestData; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="expectedResult">Expected Result</label>
+                                                                <input type="text" name="expectedResult" placeholder="Masukkan Expected Result" class="form-control" id="expectedResult" value="<?= $rowExpectedResult; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tcWebStatus">TC Web Status</label>
+                                                                <input type="text" name="tcWebStatus" class="form-control" id="tcWebStatus" value="<?= $rowTCWebStatus; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="severity">Severity</label>
+                                                                <input type="text" name="severity" class="form-control" id="severity" value="<?= $rowSeverity; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="notes">Notes</label>
+                                                                <input type="text" name="notes" class="form-control" id="notes" value="<?= $rowNotes; ?>" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="tcWebCapture">TC Web Capture</label>
+                                                                <input type="text" name="tcWebCapture" class="form-control" id="tcWebCapture" value="<?= $rowTCWebCapture; ?>" required>
+                                                            </div>
                                                             <br>
                                                             <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
                                                         </div>

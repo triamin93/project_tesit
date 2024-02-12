@@ -106,7 +106,7 @@
                             Dashboard
                         </a>
                         <!-- link user -->
-                        <a class="nav-link" href="../admin/index.php">
+                        <a class="nav-link" href="../user/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>
@@ -172,6 +172,11 @@
                     </div>
                     <div class="card mb-4">
                         <div class="card-header">
+                            <!-- Tombol Tambah File -->
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus mr-1"></i>
+                                Tambah File
+                            </button>
+                            <!-- Tombol upload File -->
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#upload" style="float: right;"><i class="fas fa-file-alt mr-1"></i>
                                 Upload File
                             </button>
@@ -184,7 +189,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Excel</th>
-                                            <th>Tanggal Upload</th>
+                                            <th>Tanggal Buat / Upload</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -206,14 +211,14 @@
                                                     <a class="btn btn-primary" href="view.php?tmp_excel=<?=$data['tmp_excel']?>" role="button"><i class="fas fa-eye mr-1"></i>View</a>
 
                                                     <!-- tombol untuk menghapus data project -->
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_test_script']; ?>">
+                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_excel']; ?>">
                                                         <i class="fas fa-trash-alt mr-1"></i>Hapus
                                                     </button>
                                                 </td>
                                             </tr>
 
                                             <!-- Form Modal hapus -->
-                                            <div class="modal fade" id="delete<?php echo $data['id_test_script']; ?>">
+                                            <div class="modal fade" id="delete<?php echo $data['id_excel']; ?>">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <!-- Modal Header -->
@@ -229,7 +234,7 @@
                                                                 <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
                                                                 <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
                                                                 <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
-                                                                <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
+                                                                <input type="hidden" name="id_excel" value="<?php echo $data['id_excel']; ?>">
                                                                 <br>
                                                                 <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
                                                             </div>
@@ -247,6 +252,32 @@
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- Form Modal tambah -->
+    <div class="modal fade" id="tambah">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah File Test Script</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <!-- Form untuk tambah data projek -->
+                <form method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="namaFile">Nama File</label>
+                            <input type="text" name="id_project" value="<?php echo $row_project['id_project']; ?>">
+                            <input type="text" name="namaFile" placeholder="Masukkan Nama File Baru" class="form-control" id="namaFile" required>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success btn-lg btn-block" name="tambahFile">Tambah</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -274,7 +305,7 @@
                             <label class="custom-file-label" for="upload_file">Choose file</label>
                         </div> -->
                         <br>
-                        <button type="submit" class="btn btn-success btn-lg btn-block" name="upload">Upload</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" name="upload">Upload</button>
                     </div>
                 </form>
             </div>

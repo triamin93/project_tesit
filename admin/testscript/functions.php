@@ -6,6 +6,8 @@ require 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 // Call phpspreadsheet IOfactory
 use PhpOffice\PhpSpreadsheet\IOFactory;
+// Call xlxs writer class to make an xlsx file
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // koneksi ke database
 $conn = mysqli_connect("localhost", "root", "", "testscript");
@@ -52,7 +54,7 @@ if(isset($_POST['upload'])){
               </script>";
     }
 
-    $ekstensiGambar = explode('.', $namaFile);
+    // $ekstensiGambar = explode('.', $namaFile);
 
     // menamakan dan mengupload file
     $namaFileBaru = uniqid();
@@ -82,6 +84,69 @@ if(isset($_POST['upload'])){
     }
 }
 
+// coding untuk membuat file baru
+if(isset($_POST['tambahFile'])){
+    // Mengambil nilai post yang ke hidden
+    $id_project = $_POST['id_project'];
+
+    // Mengambil nilai post yang di input
+    $namaFile = $_POST['namaFile'];
+
+    // Membuat file baru
+    $spreadsheet = new Spreadsheet();
+    // mendapatkan sheet yang aktif
+    $sheet = $spreadsheet->getActiveSheet();
+    // mengisi value setiap cell
+    $sheet->setCellValue('A1', 'Test Date');
+    $sheet->setCellValue('B1', 'PIC');
+    $sheet->setCellValue('C1', 'Test Case ID');
+    $sheet->setCellValue('D1', 'Modul');
+    $sheet->setCellValue('E1', 'Feature');
+    $sheet->setCellValue('F1', 'Test Case');
+    $sheet->setCellValue('G1', 'Test Type');
+    $sheet->setCellValue('H1', 'Pre-Condition');
+    $sheet->setCellValue('I1', 'Test Step');
+    $sheet->setCellValue('J1', 'Test Data');
+    $sheet->setCellValue('K1', 'Expected Result');
+    $sheet->setCellValue('L1', 'TC Web Status');
+    $sheet->setCellValue('M1', 'Severity');
+    $sheet->setCellValue('N1', 'Notes');
+    $sheet->setCellValue('O1', 'TC Web Status');
+
+    // Membuat ekstensi
+    $ekstensi = 'xlsx';
+
+    // Menamakan nama file 
+    $namaFile .= '.';
+    $namaFile .= $ekstensi;
+
+    // menamakan dan mengupload file tmp
+    $tmpFile = uniqid();
+    $tmpFile .= '.';
+    $tmpFile .= $ekstensi;
+
+    // menulis excel dengan ekstensi xlsx
+    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    // variabel untuk menyimpan data
+    $inputFileName = '../../upload/'. $tmpFile;
+    // $inputFileName = 'helloworld.xlsx';
+    // menyimpan hasil excel ke dalam folder
+    $writer->save($inputFileName);
+
+    // memasukan ke dalam database
+    $simpanFile = mysqli_query($conn, "INSERT INTO excel (id_project, nama_excel, tmp_excel, tanggal_upload) values('$id_project', '$namaFile', '$tmpFile', NOW())");
+
+}
+
+// Coding untuk hapus file test script
+if(isset($_POST['hapusFile'])){
+    // Mengambil nilai post yang ke hidden
+    $id_excel = $_POST['id_excel'];
+
+    
+
+}
+
 // Coding untuk mengedit data row excel
 if(isset($_POST['edit'])){
     // Mengambil nilai post yang hidden
@@ -91,8 +156,21 @@ if(isset($_POST['edit'])){
     // Mengambil nilai post yang di input
     $testDate = $_POST['testDate'];
     $pic = $_POST['pic'];
+    $testCaseID = $_POST['testCaseID'];
     $module = $_POST['module'];
+    $feature = $_POST['feature'];
+    $testCase = $_POST['testCase'];
+    $testType = $_POST['testType'];
+    $preCondition = $_POST['preCondition'];
+    $testStep = $_POST['testStep'];
+    $testData = $_POST['testData'];
+    $expectedResult = $_POST['expectedResult'];
+    $tcWebStatus = $_POST['tcWebStatus'];
+    $severity = $_POST['severity'];
+    $notes = $_POST['notes'];
+    $tcWebCapture = $_POST['tcWebCapture'];
 
+    // Menambahkan nilai cell row agar sesuai dengan inputan
     $cellRow++;
 
     // Ambil direktori excel
@@ -107,7 +185,19 @@ if(isset($_POST['edit'])){
     // Set value
     $sheetData->setCellValue([1, $cellRow], $testDate);
     $sheetData->setCellValue([2, $cellRow], $pic);
+    $sheetData->setCellValue([3, $cellRow], $testCaseID);
     $sheetData->setCellValue([4, $cellRow], $module);
+    $sheetData->setCellValue([5, $cellRow], $feature);
+    $sheetData->setCellValue([6, $cellRow], $testCase);
+    $sheetData->setCellValue([7, $cellRow], $testType);
+    $sheetData->setCellValue([8, $cellRow], $preCondition);
+    $sheetData->setCellValue([9, $cellRow], $testStep);
+    $sheetData->setCellValue([10, $cellRow], $testData);
+    $sheetData->setCellValue([11, $cellRow], $expectedResult);
+    $sheetData->setCellValue([12, $cellRow], $tcWebStatus);
+    $sheetData->setCellValue([13, $cellRow], $severity);
+    $sheetData->setCellValue([14, $cellRow], $notes);
+    $sheetData->setCellValue([15, $cellRow], $tcWebCapture);
 
     // Write Excel
     $writer = IOFactory::createWriter($spreadsheet, $inputFileType);
