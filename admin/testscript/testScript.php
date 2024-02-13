@@ -230,13 +230,11 @@
                                                         <!-- Pesan untuk hapus projek -->
                                                         <form method="POST">
                                                             <div class="modal-body">
-                                                                <p>Apakah Anda Yakin Menghapus Data Projek ?</p>
-                                                                <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
-                                                                <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
-                                                                <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
-                                                                <input type="hidden" name="id_excel" value="<?php echo $data['id_excel']; ?>">
+                                                                <p>Apakah Anda Yakin Menghapus Data Test Script <b> <?= $data['nama_excel']?> </b> ?</p>
+                                                                <input type="text" name="id_excel" value="<?= $data['id_excel']; ?>">
+                                                                <input type="text" name="tmp_excel" value="<?= $data['tmp_excel']; ?>">
                                                                 <br>
-                                                                <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
+                                                                <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapusFile">Hapus</button>
                                                             </div>
                                                         </form>
                                                     </div>

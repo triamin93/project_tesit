@@ -391,7 +391,7 @@
                                                                 <input type="text" name="tcWebCapture" class="form-control" id="tcWebCapture" value="<?= $rowTCWebCapture; ?>" required>
                                                             </div>
                                                             <br>
-                                                            <button type="submit" class="btn btn-warning btn-lg btn-block" name="edit">Edit</button>
+                                                            <button type="submit" class="btn btn-warning btn-lg btn-block" name="editRow">Edit</button>
                                                         </div>
                                                     </form> 
                                                 </div>

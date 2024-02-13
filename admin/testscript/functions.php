@@ -142,13 +142,29 @@ if(isset($_POST['tambahFile'])){
 if(isset($_POST['hapusFile'])){
     // Mengambil nilai post yang ke hidden
     $id_excel = $_POST['id_excel'];
+    $tmp_excel = $_POST['tmp_excel'];
 
-    
+    // Ambil direktori excel
+    $inputFileName = '../../upload/'. $tmp_excel;
+
+    // Create and Load Spreadsheet
+    $inputFileType = IOFactory::identify($inputFileName);
+    $reader = IOFactory::createReader($inputFileType);
+    $spreadsheet = $reader->load($inputFileName);
+
+    // delete file
+    unlink($inputFileName); 
+
+    $hapusFile = mysqli_query($conn, "DELETE FROM excel WHERE id_excel = '$id_excel'");
+}
+
+// Coding untuk tambah row test script
+if(isset($_POST['tambahRow'])){
 
 }
 
 // Coding untuk mengedit data row excel
-if(isset($_POST['edit'])){
+if(isset($_POST['editRow'])){
     // Mengambil nilai post yang hidden
     $cellRow = $_POST['cellRow'];
     $tmp_excel = $_POST['tmp'];
@@ -217,7 +233,7 @@ if (isset($_POST['hapus'])) {
     $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
     $hapus_akses = mysqli_query($conn, "DELETE FROM akses WHERE id_project = '$id_project'");
 
-    if ($hapus_project&&$hapus_akses) {
+    if ($hapus_project && $hapus_akses) {
         echo "
         <script>
             alert('Data Berhasil Dihapus!');
