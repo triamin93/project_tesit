@@ -172,6 +172,12 @@
                         </div>
                     </div>
                     <div class="card mb-4">
+                        <div class="card-header">
+                            <!-- Tombol Tambah File -->
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fas fa-plus mr-1"></i>
+                                Tambah Test Script
+                            </button>
+                        </div>
                         <div class="card-body">
                             <!-- Table Data projek -->
                             <div class="table-responsive">
@@ -267,17 +273,17 @@
                                                 <!-- Tombol untuk edit data isi excel -->
                                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit<?=$i; ?>">
                                                         <i class="fas fa-edit mr-1"></i>Ubah
-                                                    </button>
+                                                </button>
 
-                                                    <!-- tombol untuk hapus data isi excel -->
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?php echo $data['id_project']; ?>">
-                                                        <i class="fas fa-trash-alt mr-1"></i>Hapus
-                                                    </button>
+                                                <!-- tombol untuk hapus data isi excel -->
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete<?=$i; ?>">
+                                                    <i class="fas fa-trash-alt mr-1"></i>Hapus
+                                                </button>
                                             </td>
                                         </tr>
 
                                         <!-- Form Modal hapus -->
-                                        <div class="modal fade" id="delete<?php echo $data['id_project']; ?>">
+                                        <div class="modal fade" id="delete<?=$i; ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <!-- Modal Header -->
@@ -289,13 +295,11 @@
                                                         <!-- Pesan untuk hapus projek -->
                                                     <form method="POST">
                                                         <div class="modal-body">
-                                                            <p>Apakah Anda Yakin Menghapus Data Projek ?</p>
-                                                            <p>Nama Projek:<b><?= $data['nama_project']; ?></b></p>
-                                                            <p>Nomor CR:<b><?= $data['no_cr']; ?></b></p>
-                                                            <p>PIC:<b><?= $data['customer_pic']; ?></b></p>
-                                                            <input type="hidden" name="id_project" value="<?php echo $data['id_project']; ?>">
+                                                            <p>Apakah Anda Yakin Menghapus isi Test Script ?</p>
+                                                            <input type="text" name="cellRow" value="<?=$i; ?>">
+                                                            <input type="text" name="tmp" value="<?=$tmp_excel; ?>">
                                                             <br>
-                                                            <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapus">Hapus</button>
+                                                            <button type="submit" class="btn btn-danger btn-lg btn-block" name="hapusRow">Hapus</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -407,6 +411,123 @@
                     </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- Form Modal tambah -->
+    <div class="modal fade" id="tambah">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah File Test Script</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <!-- Form untuk tambah data projek -->
+                <form method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" name="tmp" value="<?php echo $tmp_excel; ?>">
+                            <label for="testDate">Test Date</label>
+                            <input type="date" name="testDate" class="form-control" id="testDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="pic">PIC</label>
+                            <br>
+                            <select class="form-control" id="pic" name="pic">
+                            <option value="">-- Pilih Salah Satu --</option>
+                                <?php
+                                    // Query untuk menampilkan nama user
+                                    $user = mysqli_query($conn, "SELECT nama_lengkap FROM user JOIN akses ON user.id_user = akses.id_user JOIN project ON akses.id_project = project.id_project WHERE akses.id_project = '$id_project' ORDER BY nama_lengkap ASC;");
+                                    // Pengulangan untuk menampilkan data user
+                                        while ($data = mysqli_fetch_array($user)) :
+                                ?>
+                                    <option value="<?php echo $data['nama_lengkap']; ?>"><?php echo $data['nama_lengkap']; ?></option>
+                                <?php
+                                    endwhile;
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="namaFile">Nama File</label>
+                            <input type="text" name="namaFile" placeholder="Masukkan Nama File Baru" class="form-control" id="namaFile">
+                        </div>
+                        <div class="form-group">
+                            <label for="testCaseID">Test Case ID</label>
+                            <input type="text" name="testCaseID" placeholder="Masukkan Test Case ID" class="form-control" id="testCaseID">
+                        </div>
+                        <div class="form-group">
+                            <label for="module">Module</label>
+                            <input type="text" name="module" placeholder="Masukkan Module" class="form-control" id="module">
+                        </div>
+                        <div class="form-group">
+                            <label for="feature">Feature</label>
+                            <input type="text" name="feature" placeholder="Masukkan Feature" class="form-control" id="feature">
+                        </div>
+                        <div class="form-group">
+                            <label for="testCase">Test Case</label>
+                            <input type="text" name="testCase" placeholder="Masukkan Test Case" class="form-control" id="testCase">
+                        </div>
+                        <div class="form-group">
+                            <label for="testType">Test Type</label>
+                            <select class="form-control" name="testType" id="testType">
+                                <option value="">-- Pilih Salah Satu --</option>
+                                <option value="positive">Positive</option>
+                                <option value="negative">Negative</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preCondition">Pre Condition</label>
+                            <input type="text" name="preCondition" placeholder="Masukkan Pre Condition" class="form-control" id="preCondition">
+                        </div>
+                        <div class="form-group">
+                            <label for="testStep">Test Step</label>
+                            <textarea class="form-control" name="testStep" placeholder="Masukkan Test Step" id="testStep" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="testData">Test Data</label>
+                            <textarea class="form-control" name="testData" placeholder="Masukkan Test Data" id="testData" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="expectedResult">Expected Result</label>
+                            <input type="text" name="expectedResult" placeholder="Masukkan Expected Result" class="form-control" id="expectedResult">
+                        </div>
+                        <div class="form-group">
+                            <label for="tcWebStatus">TC Web Status</label>
+                            <select class="form-control" name="tcWebStatus" id="tcWebStatus">
+                                <option value="">-- Pilih Salah Satu --</option>
+                                <option value="Not Tested">Not Tested</option>
+                                <option value="Passed">Passed</option>
+                                <option value="Failed">Failed</option>
+                                <option value="On Testing">Failed</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="severity">Severity</label>
+                            <select class="form-control" name="severity" id="severity">
+                                <option value="">-- Pilih Salah Satu --</option>
+                                <option value="None">None</option>
+                                <option value="Showstopper">Showstopper</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <input type="text" name="notes" class="form-control" id="notes">
+                        </div>
+                        <div class="form-group">
+                            <label for="tcWebCapture">TC Web Capture</label>
+                            <input type="text" name="tcWebCapture" class="form-control" id="tcWebCapture">
+                        </div>
+                        
+                        <br>
+                        <button type="submit" class="btn btn-success btn-lg btn-block" name="tambahRow">Tambah</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

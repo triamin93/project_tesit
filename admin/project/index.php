@@ -91,7 +91,7 @@
                             Dashboard
                         </a>
                         <!-- link user -->
-                        <a class="nav-link" href="../admin/index.php">
+                        <a class="nav-link" href="../user/index.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             User
                         </a>

@@ -160,7 +160,61 @@ if(isset($_POST['hapusFile'])){
 
 // Coding untuk tambah row test script
 if(isset($_POST['tambahRow'])){
+    // Mengambil nilai post yang hidden
+    $tmp_excel = $_POST['tmp'];
 
+    // Mengambil nilai post yang di input
+    $testDate = $_POST['testDate'];
+    $pic = $_POST['pic'];
+    $testCaseID = $_POST['testCaseID'];
+    $module = $_POST['module'];
+    $feature = $_POST['feature'];
+    $testCase = $_POST['testCase'];
+    $testType = $_POST['testType'];
+    $preCondition = $_POST['preCondition'];
+    $testStep = $_POST['testStep'];
+    $testData = $_POST['testData'];
+    $expectedResult = $_POST['expectedResult'];
+    $tcWebStatus = $_POST['tcWebStatus'];
+    $severity = $_POST['severity'];
+    $notes = $_POST['notes'];
+    $tcWebCapture = $_POST['tcWebCapture'];
+
+    // Ambil direktori excel
+    $inputFileName = '../../upload/'. $tmp_excel;
+
+    // Create and Load Spreadsheet
+    $inputFileType = IOFactory::identify($inputFileName);
+    $reader = IOFactory::createReader($inputFileType);
+    $spreadsheet = $reader->load($inputFileName);
+    $sheetData = $spreadsheet->getActiveSheet();
+
+    // Mengetahui nilai jumlah data
+    $sheetDataArray = $spreadsheet->getActiveSheet()->toArray();
+    $jumlahData = count($sheetDataArray);
+    $jumlahData++;
+
+    // Set value
+    $sheetData->setCellValue([1, $jumlahData], $testDate);
+    $sheetData->setCellValue([2, $jumlahData], $pic);
+    $sheetData->setCellValue([3, $jumlahData], $testCaseID);
+    $sheetData->setCellValue([4, $jumlahData], $module);
+    $sheetData->setCellValue([5, $jumlahData], $feature);
+    $sheetData->setCellValue([6, $jumlahData], $testCase);
+    $sheetData->setCellValue([7, $jumlahData], $testType);
+    $sheetData->setCellValue([8, $jumlahData], $preCondition);
+    $sheetData->setCellValue([9, $jumlahData], $testStep);
+    $sheetData->setCellValue([10, $jumlahData], $testData);
+    $sheetData->setCellValue([11, $jumlahData], $expectedResult);
+    $sheetData->setCellValue([12, $jumlahData], $tcWebStatus);
+    $sheetData->setCellValue([13, $jumlahData], $severity);
+    $sheetData->setCellValue([14, $jumlahData], $notes);
+    $sheetData->setCellValue([15, $jumlahData], $tcWebCapture);
+
+    // Write Excel
+    $writer = IOFactory::createWriter($spreadsheet, $inputFileType);
+    // save into php output
+    $writer->save($inputFileName);
 }
 
 // Coding untuk mengedit data row excel
@@ -221,32 +275,31 @@ if(isset($_POST['editRow'])){
     $writer->save($inputFileName);
     
     echo "<script>
-    alert('Data Berhasil Dihapus');
+    alert('Data Berhasil Diedit');
     </script>";
 }
 
 //Coding untuk hapus data project
-if (isset($_POST['hapus'])) {
-    $id_project = $_POST['id_project'];
+if (isset($_POST['hapusRow'])) {
+    // Mengambil nilai post yang hidden
+    $cellRow = $_POST['cellRow'];
+    $tmp_excel = $_POST['tmp'];
 
-    // query untuk hapus data project
-    $hapus_project = mysqli_query($conn, "DELETE FROM project WHERE id_project = '$id_project'");
-    $hapus_akses = mysqli_query($conn, "DELETE FROM akses WHERE id_project = '$id_project'");
+    // Menambahkan nilai cell row agar sesuai dengan inputan
+    $cellRow++;
 
-    if ($hapus_project && $hapus_akses) {
-        echo "
-        <script>
-            alert('Data Berhasil Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    } else {
-        echo "
-        <script>
-            alert('Data Gagal Dihapus!');
-            document.location.href = 'index.php';
-        </script>
-        ";
-    }
+    // Ambil direktori excel
+    $inputFileName = '../../upload/'. $tmp_excel;
+
+    // Create and Load Spreadsheet 
+    $inputFileType = IOFactory::identify($inputFileName);
+    $reader = IOFactory::createReader($inputFileType);
+    $spreadsheet = $reader->load($inputFileName);
+    $sheetData = $spreadsheet->getActiveSheet()->removeRow($cellRow); 
+
+    // Write Excel
+    $writer = IOFactory::createWriter($spreadsheet, $inputFileType);
+    // save into php output
+    $writer->save($inputFileName);
 }
 
